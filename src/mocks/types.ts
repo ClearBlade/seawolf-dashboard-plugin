@@ -17,3 +17,11 @@ export type MockAssetTreeParsed = {
 export interface MockAssetTreeFrontend {
   nodes: Record<string, { children: string[] }>;
 }
+
+export type MockEventBackendWithRuleLabel = MockEventBackend & {
+  rule_label: string;
+};
+
+type MockEventBackend = {
+  assets: string[];
+};
