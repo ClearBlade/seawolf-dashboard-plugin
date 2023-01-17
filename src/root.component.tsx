@@ -1,37 +1,17 @@
 // @ts-ignore
-// FOR NOW
-// DON'T ACTUALLY IGNORE
 import * as utils from 'microfrontendUtils';
-//
-import { Button } from '@mui/material';
+import { Button } from '@material-ui/core';
 import { useState } from 'react';
 import Widgets from './components/Widgets';
-import { useClients } from './mocks/api';
+import { useFetchAssetByType } from './api/useFetchAssetByType';
+import { QueryClientProvider } from 'react-query';
+import DashboardPlugin from './components/DashboardPlugin';
 
-export default function Root(props) {
-  console.log('the URL', window.location.href);
-  console.log('props', props);
+export default function Root() {
   console.log('utils', utils);
-  const [activeParent, setActiveParent] = useState<string>();
-
-  const assetQuery = utils.useAssetsQuery();
-  console.log('assetQuery', assetQuery);
-
-  const { data } = useClients();
-  // Will need to fetch all parent id by type of "client" and then create a tab for each one. Each tab will contain the <Widgets>
-
   return (
-    <div style={{ border: '1px solid red' }}>
-      {data.map((parent) => (
-        <Button onClick={() => setActiveParent(parent.id)}>
-          View {parent.label}
-        </Button>
-      ))}
-      <Widgets
-        parent={
-          !activeParent ? data[0] : data.find((p) => p.id === activeParent)
-        }
-      />
-    </div>
+    <QueryClientProvider contextSharing client={utils.appQueryClient}>
+      <DashboardPlugin />
+    </QueryClientProvider>
   );
 }

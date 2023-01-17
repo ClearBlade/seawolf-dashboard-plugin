@@ -1,21 +1,27 @@
-import { Grid } from '@mui/material';
+import { Grid } from '@material-ui/core';
 import React from 'react';
-import { useChildrenAssets } from '../mocks/api';
+import { useFetchAssetByIds } from '../api/useFetchAssetByIds';
 import { MockAsset } from '../mocks/types';
 import FlowMeter from './FlowMeter';
 import PitLevel from './PitLevel';
 import Pump from './Pump';
-import WidgetShell from './WidgetShell';
+import { useFetchAssetTree } from '../api/useFetchAssetTree';
 
 export default function Widgets({ parent }: { parent?: MockAsset }) {
-  const { data } = useChildrenAssets(parent);
+  const { data: selectedTree, isLoading: loadingSelectedTree } =
+    useFetchAssetTree({
+      treeId: parent?.tree_id,
+    });
+  const children = selectedTree?.DATA?.tree?.nodes[parent.id]?.children ?? [];
 
-  if (!parent) return <div>loading parents or no parents</div>;
+  const { data } = useFetchAssetByIds(children);
+
+  if (!parent || loadingSelectedTree) return <div>loading or error state</div>;
 
   return (
     <Grid container spacing={2}>
-      {data.map((childAsset) => {
-        if (childAsset.type === 'pump') {
+      {data?.DATA?.map((childAsset) => {
+        if (childAsset.type === 'pump' || childAsset.type === 'electricPump') {
           return <Pump asset={childAsset} />;
         } else if (childAsset.type === 'flow') {
           return <FlowMeter asset={childAsset} />;

@@ -10,6 +10,6 @@ module.exports = (webpackConfigEnv, argv) => {
   });
 
   return merge(defaultConfig, {
-    externals: ['microfrontendUtils'],
+    externals: ['microfrontendUtils', 'react-query'],
   });
 };
