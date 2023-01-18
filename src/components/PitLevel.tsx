@@ -55,7 +55,7 @@ export default function PitLevel({
           <Typography variant='body2'>
             <b>
               {currFill}
-              {currFillUnits ? ` ${currFillUnits}` : 'units here'}
+              {currFillUnits ? ` ${currFillUnits}` : ''}
             </b>
           </Typography>
         </Grid>
