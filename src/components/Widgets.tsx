@@ -20,7 +20,6 @@ export default function Widgets({ parent }: { parent?: MockAsset }) {
   const [openEvents, setOpenEvents] = React.useState<
     Record<string, MockEventBackendWithRuleLabel[]>
   >({});
-  console.log('openEvents', openEvents);
 
   const {
     fetchData: fetchEventsData,
@@ -66,7 +65,7 @@ export default function Widgets({ parent }: { parent?: MockAsset }) {
         const openEventsOnAsset = openEvents[childAsset.id];
         if (childAsset.type === 'pump' || childAsset.type === 'electricPump') {
           return <Pump asset={childAsset} openEvents={openEventsOnAsset} />;
-        } else if (childAsset.type === 'flow') {
+        } else if (childAsset.type === 'flowMeter') {
           return (
             <FlowMeter asset={childAsset} openEvents={openEventsOnAsset} />
           );

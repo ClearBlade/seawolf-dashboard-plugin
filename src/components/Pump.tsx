@@ -45,12 +45,17 @@ export default function Pump({
       <Grid item container direction='column' spacing={1} alignItems='center'>
         <Grid item>
           <ToysIcon
+            style={{ fontSize: '50px' }}
             className={
-              asset.custom_data['State'] ? classes.success : classes.disabled
+              !asset.custom_data['Network connection']
+                ? classes.error
+                : asset.custom_data['State']
+                ? classes.success
+                : classes.disabled
             }
           />
         </Grid>
-        <PumpAttr label={'RPM'} value={'??'} />
+        <PumpAttr label={'RPM'} value={asset.custom_data['RPM']} />
         <PumpAttr
           label={'Suc:'}
           value={asset.custom_data['Suction Pressure']}
