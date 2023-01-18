@@ -6,6 +6,7 @@ import WidgetShell from './WidgetShell';
 import OpenEventIndicator from './OpenEventIndicator';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import Plot from 'react-plotly.js';
+import { useNavigate } from 'react-router-dom';
 
 export default function PitLevel({
   asset,
@@ -27,11 +28,18 @@ export default function PitLevel({
   )?.custom_view_settings?.units;
 
   const maxFill = asset.custom_data['Max Fill Level'];
+
+  const nav = useNavigate();
+
   return (
     <WidgetShell
       asset={asset}
       openEvents={openEvents}
-      onClickCharts={() => console.log('charts')}
+      loading={loadingAssetTypes}
+      error={errorLoadingAssetTypes}
+      onClickCharts={() =>
+        nav(`assets/detail/${asset.id}/?tab=history&historyViewMode=Plots`)
+      }
     >
       <Grid container item justifyContent='center'>
         <Grid item>

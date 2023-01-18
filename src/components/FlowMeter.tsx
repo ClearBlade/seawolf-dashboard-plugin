@@ -6,6 +6,7 @@ import WidgetShell from './WidgetShell';
 import OpenEventIndicator from './OpenEventIndicator';
 import WavesIcon from '@material-ui/icons/Waves';
 import { Grid, Typography } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
 
 export default function FlowMeter({
   asset,
@@ -21,12 +22,17 @@ export default function FlowMeter({
   } = utils.useAssetTypesCache();
   const assetType = assetTypesQuery?.DATA[asset.type];
 
-  console.log('asset', asset);
+  const nav = useNavigate();
+
   return (
     <WidgetShell
       asset={asset}
+      loading={loadingAssetTypes}
+      error={errorLoadingAssetTypes}
       openEvents={openEvents}
-      onClickCharts={() => console.log('charts')}
+      onClickCharts={() =>
+        nav(`assets/detail/${asset.id}/?tab=history&historyViewMode=Plots`)
+      }
     >
       <Grid item container direction='column' spacing={1} alignItems='center'>
         <Grid item>
