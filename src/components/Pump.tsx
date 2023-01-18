@@ -11,7 +11,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import React from 'react';
-import { MockAsset } from '../mocks/types';
+import { MockAsset, MockEventBackendWithRuleLabel } from '../mocks/types';
+import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
 import WidgetShell from './WidgetShell';
 import ToysIcon from '@material-ui/icons/Toys';
 import { Skeleton } from '@material-ui/lab';
@@ -28,8 +29,13 @@ const usePumpStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Pump({ asset }: { asset: MockAsset }) {
-  console.log('pump asset', asset.custom_data);
+export default function Pump({
+  asset,
+  openEvents,
+}: {
+  asset: MockAsset;
+  openEvents?: MockEventBackendWithRuleLabel[];
+}) {
   const { data: assetTypesQuery, isLoading: loadingAssetTypes } =
     utils.useAssetTypesCache();
   const assetType = assetTypesQuery?.DATA[asset.type];
@@ -41,6 +47,12 @@ export default function Pump({ asset }: { asset: MockAsset }) {
         <Skeleton />
       ) : (
         <List>
+          {openEvents.length > 0 && (
+            <ListItem>
+              <NotificationImportantIcon />
+            </ListItem>
+          )}
+
           <ListItem>
             <Typography align='center'>
               <b>{asset.label}</b>

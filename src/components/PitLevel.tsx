@@ -1,9 +1,18 @@
-import { Card } from '@material-ui/core';
 import React from 'react';
-import { MockAsset } from '../mocks/types';
+import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
+import { MockAsset, MockEventBackendWithRuleLabel } from '../mocks/types';
 import WidgetShell from './WidgetShell';
 
-export default function PitLevel({ asset }: { asset: MockAsset }) {
-  console.log('pit asset', asset);
-  return <WidgetShell>{asset.label}</WidgetShell>;
+export default function PitLevel({
+  asset,
+  openEvents,
+}: {
+  asset: MockAsset;
+  openEvents?: MockEventBackendWithRuleLabel[];
+}) {
+  return (
+    <WidgetShell>
+      {asset.label} {openEvents.length > 0 && <NotificationImportantIcon />}
+    </WidgetShell>
+  );
 }

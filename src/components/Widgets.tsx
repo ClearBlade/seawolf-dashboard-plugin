@@ -17,56 +17,61 @@ export default function Widgets({ parent }: { parent?: MockAsset }) {
   const children = selectedTree?.DATA?.tree?.nodes[parent.id]?.children ?? [];
 
   const { data } = useFetchAssetByIds(children);
-  const [openEvents, setOpenEvents] = React.useState({});
+  const [openEvents, setOpenEvents] = React.useState<
+    Record<string, MockEventBackendWithRuleLabel[]>
+  >({});
   console.log('openEvents', openEvents);
 
-  // const {
-  //   fetchData: fetchEventsData,
-  //   data: events,
-  //   error: eventsError,
-  //   loading: eventsLoading,
-  // } = utils.useDbAndLiveDataForEvents(
-  //   () => utils.useOpenEventsForAssets(),
-  //   [
-  //     {
-  //       topics: [
-  //         '_dbupdate/_monitor/_events',
-  //         `_dbupdate/_monitor/_events/_platform`,
-  //       ],
-  //       updater: utils.eventUpdater,
-  //     },
-  //   ]
-  // );
+  const {
+    fetchData: fetchEventsData,
+    data: events,
+    error: eventsError,
+    loading: eventsLoading,
+  } = utils.useDbAndLiveDataForEvents(
+    () => utils.useOpenEventsForAssets(),
+    [
+      {
+        topics: [
+          '_dbupdate/_monitor/_events',
+          `_dbupdate/_monitor/_events/_platform`,
+        ],
+        updater: utils.eventUpdater,
+      },
+    ]
+  );
 
-  // React.useEffect(() => {
-  //   if (events) {
-  //     setOpenEvents(
-  //       events.DATA.reduce<Record<string, MockEventBackendWithRuleLabel[]>>(
-  //         (acc, event) => {
-  //           const eventAssets = utils.tryParse(event.assets, {});
-  //           Object.keys(eventAssets).forEach((assetId) => {
-  //             acc[assetId] !== undefined
-  //               ? acc[assetId].push(event)
-  //               : (acc[assetId] = [event]);
-  //           });
-  //           return acc;
-  //         },
-  //         {}
-  //       )
-  //     );
-  //   }
-  // }, [events]);
+  React.useEffect(() => {
+    if (events) {
+      setOpenEvents(
+        events.DATA.reduce<Record<string, MockEventBackendWithRuleLabel[]>>(
+          (acc, event) => {
+            const eventAssets = utils.tryParse(event.assets, {});
+            Object.keys(eventAssets).forEach((assetId) => {
+              acc[assetId] !== undefined
+                ? acc[assetId].push(event)
+                : (acc[assetId] = [event]);
+            });
+            return acc;
+          },
+          {}
+        )
+      );
+    }
+  }, [events]);
 
   if (!parent || loadingSelectedTree) return <div>loading or error state</div>;
   return (
     <Grid container spacing={2}>
       {data?.DATA?.map((childAsset) => {
+        const openEventsOnAsset = openEvents[childAsset.id];
         if (childAsset.type === 'pump' || childAsset.type === 'electricPump') {
-          return <Pump asset={childAsset} />;
+          return <Pump asset={childAsset} openEvents={openEventsOnAsset} />;
         } else if (childAsset.type === 'flow') {
-          return <FlowMeter asset={childAsset} />;
+          return (
+            <FlowMeter asset={childAsset} openEvents={openEventsOnAsset} />
+          );
         }
-        return <PitLevel asset={childAsset} />;
+        return <PitLevel asset={childAsset} openEvents={openEventsOnAsset} />;
       })}
     </Grid>
   );

@@ -4,7 +4,6 @@ import { useFetchAssetByType } from '../api/useFetchAssetByType';
 import Widgets from './Widgets';
 
 export default function DashboardPlugin() {
-  console.log('the URL', window.location.href);
   const [activeParent, setActiveParent] = useState<string>();
   const { data } = useFetchAssetByType('client');
 
