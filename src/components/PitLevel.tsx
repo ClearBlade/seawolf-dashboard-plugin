@@ -1,7 +1,7 @@
 import React from 'react';
-import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
 import { MockAsset, MockEventBackendWithRuleLabel } from '../mocks/types';
 import WidgetShell from './WidgetShell';
+import OpenEventIndicator from './OpenEventIndicator';
 
 export default function PitLevel({
   asset,
@@ -11,8 +11,12 @@ export default function PitLevel({
   openEvents?: MockEventBackendWithRuleLabel[];
 }) {
   return (
-    <WidgetShell>
-      {asset.label} {openEvents.length > 0 && <NotificationImportantIcon />}
+    <WidgetShell
+      asset={asset}
+      openEvents={openEvents}
+      onClickCharts={() => console.log('charts')}
+    >
+      hi
     </WidgetShell>
   );
 }

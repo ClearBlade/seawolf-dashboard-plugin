@@ -1,7 +1,7 @@
 import React from 'react';
 import { MockAsset, MockEventBackendWithRuleLabel } from '../mocks/types';
-import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
 import WidgetShell from './WidgetShell';
+import OpenEventIndicator from './OpenEventIndicator';
 
 export default function FlowMeter({
   asset,
@@ -11,9 +11,12 @@ export default function FlowMeter({
   openEvents?: MockEventBackendWithRuleLabel[];
 }) {
   return (
-    <WidgetShell>
-      {asset.label}
-      {openEvents.length > 0 && <NotificationImportantIcon />}
+    <WidgetShell
+      asset={asset}
+      openEvents={openEvents}
+      onClickCharts={() => console.log('charts')}
+    >
+      hi
     </WidgetShell>
   );
 }
