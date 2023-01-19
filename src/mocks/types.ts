@@ -4,12 +4,26 @@ export type MockAsset = {
   type: string;
   tree_id: string;
   custom_data: Record<string, unknown>;
+  custom_id_1: string;
+  custom_id_2: string;
+  latitude: number;
+  longitude: number;
+  location_x: number;
+  location_y: number;
+  location_z: number;
 };
 
 export type MockAssetType = {
   id: string;
   label: string;
   schema: MockAttrSchema[];
+  controls_schema: {
+    uuid: string;
+    id: string;
+    type: string;
+    widget_type: string;
+    widget_settings: unknown;
+  }[];
 };
 
 type MockAttrSchema = {
