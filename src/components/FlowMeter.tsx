@@ -1,12 +1,10 @@
 // @ts-ignore
 import * as utils from 'microfrontendUtils';
-import React from 'react';
+import { Grid, Typography } from '@material-ui/core';
+import WavesIcon from '@material-ui/icons/Waves';
+import { useNavigate } from 'react-router-dom';
 import { MockAsset, MockEventBackendWithRuleLabel } from '../mocks/types';
 import WidgetShell from './WidgetShell';
-import OpenEventIndicator from './OpenEventIndicator';
-import WavesIcon from '@material-ui/icons/Waves';
-import { Grid, Typography } from '@material-ui/core';
-import { useNavigate } from 'react-router-dom';
 
 export default function FlowMeter({
   asset,

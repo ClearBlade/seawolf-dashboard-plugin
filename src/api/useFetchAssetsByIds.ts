@@ -2,7 +2,9 @@
 import * as utils from 'microfrontendUtils';
 import { useEffect } from 'react';
 import { QueryFunctionContext, useQuery, useQueryClient } from 'react-query';
+import shallow from 'zustand/shallow';
 import { MockAsset } from '../mocks/types';
+import useRefreshRateStore from '../stores/useRefreshRateStore';
 
 export const assetByIdsFetcherFn = ({
   queryKey: [
@@ -32,11 +34,15 @@ export const assetByIdsFetcherFn = ({
 
 export const assetByIdsQueryKeys = {
   detail: (params: { ids?: string[] }) =>
-    [{ scope: 'assetByIds', params }] as const,
+    [{ scope: 'assetsByIds', params }] as const,
 };
 
-export function useFetchAssetByIds(ids?: string[]) {
+export function useFetchAssetsByIds(ids?: string[]) {
   const queryclient = useQueryClient();
+  const [refreshRate, setLastFetchTime] = useRefreshRateStore(
+    (state) => [state.refreshRate, state.setLastFetchTime],
+    shallow
+  );
 
   useEffect(() => {
     if (!ids) {
@@ -50,5 +56,9 @@ export function useFetchAssetByIds(ids?: string[]) {
   return useQuery(assetByIdsQueryKeys.detail({ ids }), assetByIdsFetcherFn, {
     refetchOnMount: false,
     keepPreviousData: true,
+    refetchInterval: refreshRate ? convertSecondsToMS(refreshRate) : false,
+    refetchIntervalInBackground: false,
   });
 }
+
+const convertSecondsToMS = (seconds: number) => seconds * 1000;

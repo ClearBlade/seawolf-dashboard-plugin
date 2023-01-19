@@ -5,9 +5,9 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import { Skeleton } from '@material-ui/lab';
 import React from 'react';
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import { MockAsset, MockEventBackendWithRuleLabel } from '../mocks/types';
 import OpenEventIndicator from './OpenEventIndicator';
 

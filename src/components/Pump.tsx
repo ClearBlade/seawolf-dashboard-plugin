@@ -4,8 +4,8 @@ import { Grid, makeStyles, Typography } from '@material-ui/core';
 import ToysIcon from '@material-ui/icons/Toys';
 import { useState } from 'react';
 import { MockAsset, MockEventBackendWithRuleLabel } from '../mocks/types';
-import WidgetShell from './WidgetShell';
 import PumpModal from './PumpModal';
+import WidgetShell from './WidgetShell';
 
 const usePumpStyles = makeStyles((theme) => ({
   success: {

@@ -68,7 +68,8 @@
     "react-router-dom": "^6.7.0",
     "single-spa": "^5.9.3",
     "single-spa-react": "^4.3.1",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "zustand": "^4.3.2"
   },
   "types": "dist/seawolf-dashboard-plugin.d.ts"
 }

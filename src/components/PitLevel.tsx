@@ -1,12 +1,10 @@
 // @ts-ignore
 import * as utils from 'microfrontendUtils';
-import React from 'react';
-import { MockAsset, MockEventBackendWithRuleLabel } from '../mocks/types';
-import WidgetShell from './WidgetShell';
-import OpenEventIndicator from './OpenEventIndicator';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import Plot from 'react-plotly.js';
 import { useNavigate } from 'react-router-dom';
+import { MockAsset, MockEventBackendWithRuleLabel } from '../mocks/types';
+import WidgetShell from './WidgetShell';
 
 export default function PitLevel({
   asset,
