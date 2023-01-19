@@ -115,7 +115,10 @@ const AssetControls = ({
   } = utils.useAppPlugins();
   const { status, publish } = utils.useMessaging();
   const { data: userInfo } = utils.useUserInfo();
+  const { data: userPerms } = utils.useUserPermissions();
   const { enqueueSnackbar } = useSnackbar();
+
+  const userIsViewer = !userPerms?.admin && !userPerms?.edit;
 
   return (
     <>
@@ -164,8 +167,8 @@ const AssetControls = ({
                     });
                   }
                 }}
-                disabled={!status.messaging}
-                // disabled={!assetControlsAccess || !status.messaging}
+                // Normally disabling is based off of whether user has access permissions from custom_settings, but that was more difficult to implement for microfrontends so we did it based on whether the user is a viewer
+                disabled={!status.messaging || userIsViewer}
                 isSubmitting={false}
               />
             </Grid>
