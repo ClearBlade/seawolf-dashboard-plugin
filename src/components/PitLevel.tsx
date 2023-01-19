@@ -44,7 +44,7 @@ export default function PitLevel({
       <Grid container item justifyContent='center'>
         <Grid item>
           <FillPlot
-            currentFill={currFill as number} // COME BACK TO THIS ASSERTION WHEN WE HAVE TYPES
+            currentFill={currFill as number} // COME BACK TO THIS ASSERTION WHEN WE HAVE TYPES IMPORTED
             maxFill={maxFill as number}
           />
         </Grid>

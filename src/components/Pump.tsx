@@ -1,11 +1,11 @@
 // @ts-ignore
 import * as utils from 'microfrontendUtils';
-import { List, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Grid, makeStyles, Typography } from '@material-ui/core';
 import ToysIcon from '@material-ui/icons/Toys';
-import { Skeleton } from '@material-ui/lab';
+import { useState } from 'react';
 import { MockAsset, MockEventBackendWithRuleLabel } from '../mocks/types';
-import OpenEventIndicator from './OpenEventIndicator';
 import WidgetShell from './WidgetShell';
+import PumpModal from './PumpModal';
 
 const usePumpStyles = makeStyles((theme) => ({
   success: {
@@ -33,58 +33,67 @@ export default function Pump({
   } = utils.useAssetTypesCache();
   const assetType = assetTypesQuery?.DATA[asset.type];
   const classes = usePumpStyles();
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <WidgetShell
-      asset={asset}
-      openEvents={openEvents}
-      loading={loadingAssetTypes}
-      error={errorLoadingAssetTypes}
-      onClickCharts={() => console.log('charts')}
-    >
-      <Grid item container direction='column' spacing={1} alignItems='center'>
-        <Grid item>
-          <ToysIcon
-            style={{ fontSize: '50px' }}
-            className={
-              !asset.custom_data['Network connection']
-                ? classes.error
-                : asset.custom_data['State']
-                ? classes.success
-                : classes.disabled
+    <>
+      <WidgetShell
+        asset={asset}
+        openEvents={openEvents}
+        loading={loadingAssetTypes}
+        error={errorLoadingAssetTypes}
+        onClickCharts={() => setModalOpen(true)}
+      >
+        <Grid item container direction='column' spacing={1} alignItems='center'>
+          <Grid item>
+            <ToysIcon
+              style={{ fontSize: '50px' }}
+              className={
+                !asset.custom_data['Network connection']
+                  ? classes.error
+                  : asset.custom_data['State']
+                  ? classes.success
+                  : classes.disabled
+              }
+            />
+          </Grid>
+          <PumpAttr label={'RPM'} value={asset.custom_data['RPM']} />
+          <PumpAttr
+            label={'Suc:'}
+            value={asset.custom_data['Suction Pressure']}
+            units={
+              assetType?.schema?.find(
+                (attr) => attr.attribute_name === 'Suction Pressure'
+              )?.custom_view_settings?.units
+            }
+          />
+          <PumpAttr
+            label={'Dis:'}
+            value={asset.custom_data['Discharge Pressure']}
+            units={
+              assetType?.schema?.find(
+                (attr) => attr.attribute_name === 'Discharge Pressure'
+              )?.custom_view_settings?.units
+            }
+          />
+          <PumpAttr
+            label={'Temp:'}
+            value={asset.custom_data['Temperature']}
+            units={
+              assetType?.schema?.find(
+                (attr) => attr.attribute_name === 'Temperature'
+              )?.custom_view_settings?.units
             }
           />
         </Grid>
-        <PumpAttr label={'RPM'} value={asset.custom_data['RPM']} />
-        <PumpAttr
-          label={'Suc:'}
-          value={asset.custom_data['Suction Pressure']}
-          units={
-            assetType?.schema?.find(
-              (attr) => attr.attribute_name === 'Suction Pressure'
-            )?.custom_view_settings?.units
-          }
-        />
-        <PumpAttr
-          label={'Dis:'}
-          value={asset.custom_data['Discharge Pressure']}
-          units={
-            assetType?.schema?.find(
-              (attr) => attr.attribute_name === 'Discharge Pressure'
-            )?.custom_view_settings?.units
-          }
-        />
-        <PumpAttr
-          label={'Temp:'}
-          value={asset.custom_data['Temperature']}
-          units={
-            assetType?.schema?.find(
-              (attr) => attr.attribute_name === 'Temperature'
-            )?.custom_view_settings?.units
-          }
-        />
-      </Grid>
-    </WidgetShell>
+      </WidgetShell>
+      <PumpModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        asset={asset}
+        assetType={assetType}
+      />
+    </>
   );
 }
 

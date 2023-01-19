@@ -6,6 +6,19 @@ export type MockAsset = {
   custom_data: Record<string, unknown>;
 };
 
+export type MockAssetType = {
+  id: string;
+  label: string;
+  schema: MockAttrSchema[];
+};
+
+type MockAttrSchema = {
+  attribute_name: string;
+  attribute_label?: string;
+  custom_view_settings?: { units?: string };
+  hide_attribute: boolean;
+};
+
 export type MockAssetWithChildre = MockAsset & { children: string[] };
 
 export type MockAssetTreeParsed = {
