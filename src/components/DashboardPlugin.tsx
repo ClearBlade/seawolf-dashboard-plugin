@@ -1,17 +1,24 @@
-import { Tab, Tabs } from '@material-ui/core';
+import { makeStyles, Tab, Tabs } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import { useState } from 'react';
 import { useFetchAssetByType } from '../api/useFetchAssetByType';
 import Widgets from './Widgets';
 
+const usePluginStyles = makeStyles((theme) => ({
+  plugin: {
+    marginTop: theme.spacing(1),
+  },
+}));
+
 export default function DashboardPlugin() {
+  const classes = usePluginStyles();
   const [activeParent, setActiveParent] = useState<string>();
   const { data, isLoading, error } = useFetchAssetByType('client');
 
   if (isLoading) return <Skeleton />;
   if (error) return <div>Error</div>;
   return (
-    <div>
+    <div className={classes.plugin}>
       <Tabs
         value={activeParent ?? data?.DATA[0].id}
         indicatorColor='primary'

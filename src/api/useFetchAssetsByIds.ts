@@ -2,7 +2,6 @@
 import * as utils from 'microfrontendUtils';
 import { useEffect } from 'react';
 import { QueryFunctionContext, useQuery, useQueryClient } from 'react-query';
-import shallow from 'zustand/shallow';
 import { MockAsset } from '../mocks/types';
 import useRefreshRateStore from '../stores/useRefreshRateStore';
 
@@ -39,10 +38,7 @@ export const assetByIdsQueryKeys = {
 
 export function useFetchAssetsByIds(ids?: string[]) {
   const queryclient = useQueryClient();
-  const [refreshRate, setLastFetchTime] = useRefreshRateStore(
-    (state) => [state.refreshRate, state.setLastFetchTime],
-    shallow
-  );
+  const refreshRate = useRefreshRateStore((state) => state.refreshRate);
 
   useEffect(() => {
     if (!ids) {
