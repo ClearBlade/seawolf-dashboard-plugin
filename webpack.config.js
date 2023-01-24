@@ -10,6 +10,13 @@ module.exports = (webpackConfigEnv, argv) => {
   });
 
   return merge(defaultConfig, {
-    externals: ['microfrontendUtils', 'react-query'],
+    externals: [
+      'microfrontendUtils',
+      'react-query',
+      '@material-ui/core',
+      '@material-ui/icons',
+      '@material-ui/lab',
+      'react-router-dom',
+    ],
   });
 };
