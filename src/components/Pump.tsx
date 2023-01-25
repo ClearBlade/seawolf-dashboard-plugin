@@ -1,6 +1,8 @@
 // @ts-ignore
 import * as utils from 'microfrontendUtils';
+// @ts-ignore
 import { Grid, makeStyles, Typography } from '@material-ui/core';
+// @ts-ignore
 import ToysIcon from '@material-ui/icons/Toys';
 import { useState } from 'react';
 import { MockAsset, MockEventBackendWithRuleLabel } from '../mocks/types';

@@ -1,7 +1,10 @@
 // @ts-ignore
 import * as utils from 'microfrontendUtils';
+// @ts-ignore
 import { Grid, Typography } from '@material-ui/core';
+// @ts-ignore
 import WavesIcon from '@material-ui/icons/Waves';
+// @ts-ignore
 import { useNavigate } from 'react-router-dom';
 import { MockAsset, MockEventBackendWithRuleLabel } from '../mocks/types';
 import WidgetShell from './WidgetShell';

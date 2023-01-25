@@ -1,6 +1,8 @@
 // @ts-ignore
 import * as utils from 'microfrontendUtils';
+// @ts-ignore
 import { Grid, makeStyles } from '@material-ui/core';
+// @ts-ignore
 import { Skeleton } from '@material-ui/lab';
 import React from 'react';
 import { useFetchAssetsByIds } from '../api/useFetchAssetsByIds';

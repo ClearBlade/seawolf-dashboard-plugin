@@ -1,4 +1,6 @@
+// @ts-ignore
 import { makeStyles, Tab, Tabs } from '@material-ui/core';
+// @ts-ignore
 import { Skeleton } from '@material-ui/lab';
 import { useState } from 'react';
 import { useFetchAssetByType } from '../api/useFetchAssetByType';

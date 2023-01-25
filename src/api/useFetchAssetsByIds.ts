@@ -1,6 +1,7 @@
 // @ts-ignore
 import * as utils from 'microfrontendUtils';
 import { useEffect } from 'react';
+// @ts-ignore
 import { QueryFunctionContext, useQuery, useQueryClient } from 'react-query';
 import { MockAsset } from '../mocks/types';
 import useRefreshRateStore from '../stores/useRefreshRateStore';

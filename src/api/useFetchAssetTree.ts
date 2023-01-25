@@ -1,5 +1,6 @@
 // @ts-ignore
 import * as utils from 'microfrontendUtils';
+// @ts-ignore
 import { QueryFunctionContext, useQuery } from 'react-query';
 import { MockAssetTreeParsed } from '../mocks/types';
 

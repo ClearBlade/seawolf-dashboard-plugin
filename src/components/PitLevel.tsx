@@ -1,7 +1,9 @@
 // @ts-ignore
 import * as utils from 'microfrontendUtils';
+// @ts-ignore
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import Plot from 'react-plotly.js';
+// @ts-ignore
 import { useNavigate } from 'react-router-dom';
 import { MockAsset, MockEventBackendWithRuleLabel } from '../mocks/types';
 import WidgetShell from './WidgetShell';

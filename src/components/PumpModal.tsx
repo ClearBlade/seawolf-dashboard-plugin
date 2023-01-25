@@ -10,8 +10,10 @@ import {
   IconButton,
   makeStyles,
   Typography,
+  // @ts-ignore
 } from '@material-ui/core';
 import { MockAsset, MockAssetType } from '../mocks/types';
+// @ts-ignore
 import CloseIcon from '@material-ui/icons/Close';
 import { v4 as uuid } from 'uuid';
 import { useSnackbar } from 'notistack';
