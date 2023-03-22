@@ -1,5 +1,4 @@
-// @ts-ignore
-import * as utils from 'microfrontendUtils';
+import * as utils from '@ia/mfe';
 import { SnackbarProvider } from 'notistack';
 import { QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';

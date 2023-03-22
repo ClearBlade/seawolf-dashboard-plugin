@@ -1,5 +1,5 @@
 // @ts-ignore
-import * as utils from 'microfrontendUtils';
+import * as utils from '@ia/mfe';
 // @ts-ignore
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import Plot from 'react-plotly.js';

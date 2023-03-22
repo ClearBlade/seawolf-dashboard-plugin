@@ -11,7 +11,7 @@ module.exports = (webpackConfigEnv, argv) => {
 
   return merge(defaultConfig, {
     externals: [
-      'microfrontendUtils',
+      '@ia/mfe',
       'react-query',
       '@material-ui/core',
       '@material-ui/icons',

@@ -1,5 +1,5 @@
 // @ts-ignore
-import * as utils from 'microfrontendUtils';
+import * as utils from '@ia/mfe';
 import { useEffect } from 'react';
 // @ts-ignore
 import { QueryFunctionContext, useQuery, useQueryClient } from 'react-query';
