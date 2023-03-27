@@ -1,4 +1,4 @@
-import * as utils from '@ia/mfe';
+import { utils } from '@clearblade/ia-mfe';
 import { SnackbarProvider } from 'notistack';
 import { QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';

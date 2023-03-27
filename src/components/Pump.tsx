@@ -1,11 +1,8 @@
-// @ts-ignore
-import * as utils from '@ia/mfe';
-// @ts-ignore
+import { types, utils } from '@clearblade/ia-mfe';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
-// @ts-ignore
 import ToysIcon from '@material-ui/icons/Toys';
 import { useState } from 'react';
-import { MockAsset, MockEventBackendWithRuleLabel } from '../mocks/types';
+import { EventBackendWithRuleLabel } from '../types';
 import PumpModal from './PumpModal';
 import WidgetShell from './WidgetShell';
 
@@ -25,8 +22,8 @@ export default function Pump({
   asset,
   openEvents,
 }: {
-  asset: MockAsset;
-  openEvents?: MockEventBackendWithRuleLabel[];
+  asset: types.Asset['frontend'];
+  openEvents?: EventBackendWithRuleLabel[];
 }) {
   const {
     data: assetTypesQuery,
@@ -36,6 +33,11 @@ export default function Pump({
   const assetType = assetTypesQuery?.DATA[asset.type];
   const classes = usePumpStyles();
   const [modalOpen, setModalOpen] = useState(false);
+
+  // name of RPM will differ based on electric vs. diesel
+  // diesel: Current Speed
+  // electric: RPM
+  // state attribute is different too: what I currently have works for diesel only. For electric, display green if the RPM attribute is > 0 and display grey if RPM = 0. Same logic for network connection overriding the color as red.
 
   return (
     <>
@@ -59,7 +61,10 @@ export default function Pump({
               }
             />
           </Grid>
-          <PumpAttr label={'RPM'} value={asset.custom_data['RPM']} />
+          <PumpAttr
+            label={'RPM: '}
+            value={asset.custom_data['Current Speed']}
+          />
           <PumpAttr
             label={'Suc:'}
             value={asset.custom_data['Suction Pressure']}

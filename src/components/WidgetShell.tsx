@@ -4,14 +4,12 @@ import {
   IconButton,
   makeStyles,
   Typography,
-  // @ts-ignore
 } from '@material-ui/core';
-// @ts-ignore
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-// @ts-ignore
 import { Skeleton } from '@material-ui/lab';
 import React from 'react';
-import { MockAsset, MockEventBackendWithRuleLabel } from '../mocks/types';
+import { EventBackendWithRuleLabel } from '../types';
+import { types } from '@clearblade/ia-mfe';
 import OpenEventIndicator from './OpenEventIndicator';
 
 const useWidgetShellStyles = makeStyles((theme) => ({
@@ -33,9 +31,9 @@ export default function WidgetShell({
   children: React.ReactNode;
   loading?: boolean;
   error?: boolean;
-  asset: MockAsset;
+  asset: types.Asset['frontend'];
   onClickCharts: () => void;
-  openEvents?: MockEventBackendWithRuleLabel[];
+  openEvents?: EventBackendWithRuleLabel[];
 }) {
   const classes = useWidgetShellStyles();
   return (

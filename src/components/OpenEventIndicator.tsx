@@ -1,10 +1,7 @@
 import React from 'react';
-import { MockEventBackendWithRuleLabel } from '../mocks/types';
-// @ts-ignore
+import { EventBackendWithRuleLabel } from '../types';
 import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
-// @ts-ignore
 import { IconButton, makeStyles } from '@material-ui/core';
-// @ts-ignore
 import { useNavigate } from 'react-router-dom';
 
 const useOpenEventIndicatorStyle = makeStyles((theme) => ({
@@ -17,7 +14,7 @@ export default function OpenEventIndicator({
   openEvents,
   assetId,
 }: {
-  openEvents?: MockEventBackendWithRuleLabel[];
+  openEvents?: EventBackendWithRuleLabel[];
   assetId: string;
 }) {
   const classes = useOpenEventIndicatorStyle();

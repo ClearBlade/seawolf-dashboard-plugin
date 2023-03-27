@@ -1,13 +1,10 @@
-// @ts-ignore
-import * as utils from '@ia/mfe';
-// @ts-ignore
+import { types, utils } from '@clearblade/ia-mfe';
 import { Grid, makeStyles } from '@material-ui/core';
-// @ts-ignore
 import { Skeleton } from '@material-ui/lab';
 import React from 'react';
 import { useFetchAssetsByIds } from '../api/useFetchAssetsByIds';
 import { useFetchAssetTree } from '../api/useFetchAssetTree';
-import { MockAsset, MockEventBackendWithRuleLabel } from '../mocks/types';
+import { EventBackendWithRuleLabel } from '../types';
 import FlowMeter from './FlowMeter';
 import PitLevel from './PitLevel';
 import Pump from './Pump';
@@ -19,7 +16,11 @@ const useWidgetsStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Widgets({ parent }: { parent?: MockAsset }) {
+export default function Widgets({
+  parent,
+}: {
+  parent?: types.Asset['frontend'];
+}) {
   const classes = useWidgetsStyles();
   const {
     data: selectedTree,
@@ -36,7 +37,7 @@ export default function Widgets({ parent }: { parent?: MockAsset }) {
     error: errorChildAssets,
   } = useFetchAssetsByIds(children);
   const [openEvents, setOpenEvents] = React.useState<
-    Record<string, MockEventBackendWithRuleLabel[]>
+    Record<string, EventBackendWithRuleLabel[]>
   >({});
 
   const {
@@ -59,18 +60,15 @@ export default function Widgets({ parent }: { parent?: MockAsset }) {
   React.useEffect(() => {
     if (events) {
       setOpenEvents(
-        events.DATA.reduce<Record<string, MockEventBackendWithRuleLabel[]>>(
-          (acc, event) => {
-            const eventAssets = utils.tryParse(event.assets, {});
-            Object.keys(eventAssets).forEach((assetId) => {
-              acc[assetId] !== undefined
-                ? acc[assetId].push(event)
-                : (acc[assetId] = [event]);
-            });
-            return acc;
-          },
-          {}
-        )
+        events.DATA.reduce((acc, event) => {
+          const eventAssets = utils.tryParse(event.assets, {});
+          Object.keys(eventAssets).forEach((assetId) => {
+            acc[assetId] !== undefined
+              ? acc[assetId].push(event)
+              : (acc[assetId] = [event]);
+          });
+          return acc;
+        }, {})
       );
     }
   }, [events]);

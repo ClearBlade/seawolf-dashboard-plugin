@@ -1,9 +1,6 @@
-// @ts-ignore
-import * as utils from '@ia/mfe';
+import { utils, types } from '@clearblade/ia-mfe';
 import { useEffect } from 'react';
-// @ts-ignore
 import { QueryFunctionContext, useQuery, useQueryClient } from 'react-query';
-import { MockAsset } from '../mocks/types';
 import useRefreshRateStore from '../stores/useRefreshRateStore';
 
 export const assetByIdsFetcherFn = ({
@@ -15,7 +12,7 @@ export const assetByIdsFetcherFn = ({
 }: QueryFunctionContext<
   ReturnType<typeof assetByIdsQueryKeys.detail>
 >): Promise<{
-  DATA: undefined | MockAsset[];
+  DATA: undefined | types.Asset['frontend'][];
   COUNT: number;
 }> => {
   if (!ids || !ids.length) {

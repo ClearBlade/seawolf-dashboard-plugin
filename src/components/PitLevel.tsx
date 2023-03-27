@@ -1,19 +1,16 @@
-// @ts-ignore
-import * as utils from '@ia/mfe';
-// @ts-ignore
+import { types, utils } from '@clearblade/ia-mfe';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import Plot from 'react-plotly.js';
-// @ts-ignore
 import { useNavigate } from 'react-router-dom';
-import { MockAsset, MockEventBackendWithRuleLabel } from '../mocks/types';
+import { EventBackendWithRuleLabel } from '../types';
 import WidgetShell from './WidgetShell';
 
 export default function PitLevel({
   asset,
   openEvents,
 }: {
-  asset: MockAsset;
-  openEvents?: MockEventBackendWithRuleLabel[];
+  asset: types.Asset['frontend'];
+  openEvents?: EventBackendWithRuleLabel[];
 }) {
   const {
     data: assetTypesQuery,

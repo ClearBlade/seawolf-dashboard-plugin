@@ -1,8 +1,5 @@
-// @ts-ignore
-import * as utils from '@ia/mfe';
-// @ts-ignore
+import { utils, types } from '@clearblade/ia-mfe';
 import { QueryFunctionContext, useQuery } from 'react-query';
-import { MockAssetTreeParsed } from '../mocks/types';
 
 export const assetTreeFetcherFn = ({
   queryKey: [
@@ -13,7 +10,7 @@ export const assetTreeFetcherFn = ({
 }: QueryFunctionContext<
   ReturnType<typeof assetTreeQueryKeys.detail>
 >): Promise<{
-  DATA: MockAssetTreeParsed | undefined;
+  DATA: types.AssetTreeSchema['frontend'] | undefined;
   COUNT: number;
 }> => {
   if (treeId && treeId.length > 0) {

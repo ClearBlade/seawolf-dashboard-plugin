@@ -1,20 +1,16 @@
-// @ts-ignore
-import * as utils from '@ia/mfe';
-// @ts-ignore
+import { utils, types } from '@clearblade/ia-mfe';
 import { Grid, Typography } from '@material-ui/core';
-// @ts-ignore
 import WavesIcon from '@material-ui/icons/Waves';
-// @ts-ignore
 import { useNavigate } from 'react-router-dom';
-import { MockAsset, MockEventBackendWithRuleLabel } from '../mocks/types';
+import { EventBackendWithRuleLabel } from '../types/index';
 import WidgetShell from './WidgetShell';
 
 export default function FlowMeter({
   asset,
   openEvents,
 }: {
-  asset: MockAsset;
-  openEvents?: MockEventBackendWithRuleLabel[];
+  asset: types.Asset['frontend'];
+  openEvents?: EventBackendWithRuleLabel[];
 }) {
   const {
     data: assetTypesQuery,

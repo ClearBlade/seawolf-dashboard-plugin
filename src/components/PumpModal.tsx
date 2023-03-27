@@ -1,5 +1,4 @@
-// @ts-ignore
-import * as utils from '@ia/mfe';
+import { types, utils } from '@clearblade/ia-mfe';
 import {
   Dialog,
   DialogActions,
@@ -10,10 +9,7 @@ import {
   IconButton,
   makeStyles,
   Typography,
-  // @ts-ignore
 } from '@material-ui/core';
-import { MockAsset, MockAssetType } from '../mocks/types';
-// @ts-ignore
 import CloseIcon from '@material-ui/icons/Close';
 import { v4 as uuid } from 'uuid';
 import { useSnackbar } from 'notistack';
@@ -38,8 +34,8 @@ export default function PumpModal({
 }: {
   open: boolean;
   onClose: () => void;
-  asset: MockAsset;
-  assetType?: MockAssetType;
+  asset: types.Asset['frontend'];
+  assetType?: types.AssetType['frontend'];
 }) {
   const classes = usePumpModalStyles();
   if (!assetType) return null;
@@ -109,8 +105,8 @@ const AssetControls = ({
   asset,
   assetType,
 }: {
-  asset: MockAsset;
-  assetType?: MockAssetType;
+  asset: types.Asset['frntend'];
+  assetType?: types.AssetType['frontend'];
 }) => {
   const {
     assetControlPlugins: { getPluginById },
