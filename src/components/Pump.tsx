@@ -39,6 +39,8 @@ export default function Pump({
   // electric: RPM
   // state attribute is different too: what I currently have works for diesel only. For electric, display green if the RPM attribute is > 0 and display grey if RPM = 0. Same logic for network connection overriding the color as red.
 
+  // THIS COMPONENT SHOULD HAVE SWITCH AND SHOW DIFFERENT CONTENTS DEPENDING ON THE ASSET TYPE (ryan says there might be a third time that comes along so this is the best approach even if it repeats some code)
+
   return (
     <>
       <WidgetShell
