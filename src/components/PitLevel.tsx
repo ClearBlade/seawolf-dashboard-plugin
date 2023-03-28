@@ -19,12 +19,14 @@ export default function PitLevel({
   } = utils.useAssetTypesCache();
   const assetType = assetTypesQuery?.DATA[asset.type];
 
-  const currFill = asset.custom_data['Fill Level'];
+  const currFill = asset.custom_data['Level'];
   const currFillUnits = assetType?.schema?.find(
-    (attr) => attr.attribute_name === 'Fill Level'
+    (attr) => attr.attribute_name === 'Level'
   )?.custom_view_settings?.units;
 
   const maxFill = asset.custom_data['Max Fill Level'];
+  const maxFillNum =
+    typeof maxFill === 'string' ? parseFloat(maxFill) : maxFill;
 
   const nav = useNavigate();
 
@@ -40,10 +42,7 @@ export default function PitLevel({
     >
       <Grid container item justifyContent='center'>
         <Grid item>
-          <FillPlot
-            currentFill={currFill as number} // COME BACK TO THIS ASSERTION WHEN WE HAVE TYPES IMPORTED
-            maxFill={maxFill as number}
-          />
+          <FillPlot currentFill={currFill} maxFill={maxFillNum} />
         </Grid>
       </Grid>
 

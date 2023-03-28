@@ -40,7 +40,9 @@ export default function WidgetShell({
     <Grid item>
       <Card className={classes.shell}>
         {error ? (
-          <>Error</>
+          <Grid container>
+            <Grid item>Error</Grid>
+          </Grid>
         ) : loading ? (
           <Skeleton />
         ) : (
@@ -65,13 +67,13 @@ export default function WidgetShell({
               </Grid>
               <Grid item>
                 <Typography>
-                  <b>{asset.label}</b>
+                  <b>{asset?.label}</b>
                 </Typography>
               </Grid>
               <Grid item>
                 <OpenEventIndicator
                   openEvents={openEvents}
-                  assetId={asset.id}
+                  assetId={asset?.id}
                 />
               </Grid>
             </Grid>

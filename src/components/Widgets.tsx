@@ -4,6 +4,11 @@ import { Skeleton } from '@material-ui/lab';
 import React from 'react';
 import { useFetchAssetsByIds } from '../api/useFetchAssetsByIds';
 import { useFetchAssetTree } from '../api/useFetchAssetTree';
+import {
+  DieselPumpTypeId,
+  ElectricPumpTypeId,
+  FlowMeterTypeId,
+} from '../constants.ts/typeNames';
 import { EventBackendWithRuleLabel } from '../types';
 import FlowMeter from './FlowMeter';
 import PitLevel from './PitLevel';
@@ -29,7 +34,8 @@ export default function Widgets({
   } = useFetchAssetTree({
     treeId: parent?.tree_id,
   });
-  const children = selectedTree?.DATA?.tree?.nodes[parent.id]?.children ?? [];
+  const children =
+    selectedTree?.DATA?.tree?.nodes?.[parent?.id]?.children ?? [];
 
   const {
     data: childAssets,
@@ -93,11 +99,11 @@ export default function Widgets({
         {childAssets?.DATA?.map((childAsset) => {
           const openEventsOnAsset = openEvents[childAsset.id];
           if (
-            childAsset.type === 'pump' ||
-            childAsset.type === 'electricPump'
+            childAsset.type === DieselPumpTypeId ||
+            childAsset.type === ElectricPumpTypeId
           ) {
             return <Pump asset={childAsset} openEvents={openEventsOnAsset} />;
-          } else if (childAsset.type === 'flowMeter') {
+          } else if (childAsset.type === FlowMeterTypeId) {
             return (
               <FlowMeter asset={childAsset} openEvents={openEventsOnAsset} />
             );
