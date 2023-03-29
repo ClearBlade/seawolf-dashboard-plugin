@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     border: `1px solid ${theme.palette.text.primary} !important`,
     borderRadius: theme.shape.borderRadius,
   },
-  marginRight: {
+  marginLeft: {
     marginLeft: theme.spacing(1),
   },
   popper: {
@@ -88,16 +88,18 @@ export default function RefreshRateSetting({
             onClick={() => setMenuOpen(true)}
             className={classes.rateButton}
           >
-            {getLabelForRefreshRate(selectedRate, true)}
+            <div className={classes.marginLeft}>
+              {getLabelForRefreshRate(selectedRate, true)}
+            </div>
             {!menuOpen ? (
               <ArrowDropDownIcon
                 fontSize='small'
-                className={selectedRate.count ? classes.marginRight : ''}
+                className={selectedRate.count ? classes.marginLeft : ''}
               />
             ) : (
               <ArrowDropUpIcon
                 fontSize='small'
-                className={selectedRate.count ? classes.marginRight : ''}
+                className={selectedRate.count ? classes.marginLeft : ''}
               />
             )}
           </Button>

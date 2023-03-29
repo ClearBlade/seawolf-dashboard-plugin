@@ -59,7 +59,7 @@ export default function PumpModal({
             <Typography variant='h6'>{asset.label || asset.id}</Typography>
           </Grid>
           <Grid item>
-            <IconButton size='small'>
+            <IconButton size='small' onClick={onClose}>
               <CloseIcon />
             </IconButton>
           </Grid>
@@ -74,7 +74,7 @@ export default function PumpModal({
           {customDataAttrs.map(([k, val]) => {
             const attr = assetType?.schema?.find((a) => a.attribute_name === k);
             const { trueColorLight, falseColorLight, trueLabel, falseLabel } =
-              attr.custom_view_settings ?? {};
+              attr?.custom_view_settings ?? {};
 
             // Hide hidden attributes
             if (!attr || attr?.hide_attribute) return null;
@@ -100,7 +100,7 @@ export default function PumpModal({
                       palette[
                         trueColorLight.value as keyof Palette
                       ] as PaletteColor
-                    ).main
+                    )?.main
                   : trueColorLight.value;
               const falseColorCode =
                 typeof falseColorLight === 'string'
@@ -110,7 +110,7 @@ export default function PumpModal({
                       palette[
                         falseColorLight.value as keyof Palette
                       ] as PaletteColor
-                    ).main
+                    )?.main
                   : falseColorLight.value;
               displayColor =
                 typeof val !== 'undefined' ? trueColorCode : falseColorCode;
