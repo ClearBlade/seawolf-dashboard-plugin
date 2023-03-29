@@ -27,7 +27,7 @@ export default function FlowMeter({
       loading={loadingAssetTypes}
       error={errorLoadingAssetTypes}
       openEvents={openEvents}
-      onClickCharts={() =>
+      onClickPlots={() =>
         nav(`assets/detail/${asset.id}/?tab=history&historyViewMode=Plots`)
       }
     >

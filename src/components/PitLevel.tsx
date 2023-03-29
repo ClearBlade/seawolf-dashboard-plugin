@@ -36,7 +36,7 @@ export default function PitLevel({
       openEvents={openEvents}
       loading={loadingAssetTypes}
       error={errorLoadingAssetTypes}
-      onClickCharts={() =>
+      onClickPlots={() =>
         nav(`assets/detail/${asset.id}/?tab=history&historyViewMode=Plots`)
       }
     >

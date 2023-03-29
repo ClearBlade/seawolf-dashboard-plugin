@@ -11,12 +11,15 @@ import React from 'react';
 import { EventBackendWithRuleLabel } from '../types';
 import { types } from '@clearblade/ia-mfe';
 import OpenEventIndicator from './OpenEventIndicator';
+import BarChartIcon from '@material-ui/icons/BarChart';
+import { Tooltip } from '@mui/material';
 
 const useWidgetShellStyles = makeStyles((theme) => ({
   shell: {
     padding: theme.spacing(2),
     height: theme.spacing(38),
     width: theme.spacing(38),
+    display: 'flex',
   },
 }));
 
@@ -25,17 +28,17 @@ export default function WidgetShell({
   loading,
   error,
   asset,
+  onClickPlots,
   onClickCharts,
   openEvents,
-  overrideIcon,
 }: {
   children: React.ReactNode;
   loading?: boolean;
   error?: boolean;
   asset: types.Asset['frontend'];
-  onClickCharts: () => void;
+  onClickPlots: () => void;
+  onClickCharts?: () => void;
   openEvents?: EventBackendWithRuleLabel[];
-  overrideIcon?: JSX.Element;
 }) {
   const classes = useWidgetShellStyles();
   return (
@@ -60,16 +63,12 @@ export default function WidgetShell({
               direction='row'
               justifyContent='space-between'
               wrap='nowrap'
-              alignItems='center'
+              alignItems='flex-start'
             >
-              <Grid item>
-                <IconButton size='small' onClick={onClickCharts}>
-                  {overrideIcon ?? <TrendingUpIcon />}
-                </IconButton>
-              </Grid>
+              <Grid item></Grid>
               <Grid item>
                 <Typography>
-                  <b>{asset?.label}</b>
+                  <b>{asset?.label || asset?.id}</b>
                 </Typography>
               </Grid>
               <Grid item>
@@ -79,7 +78,34 @@ export default function WidgetShell({
                 />
               </Grid>
             </Grid>
+
             {children}
+
+            <Grid
+              item
+              container
+              direction='row'
+              justifyContent='space-between'
+              alignItems='flex-end'
+              style={{ flex: 1 }}
+            >
+              <Grid item>
+                <Tooltip title='Go to plots'>
+                  <IconButton size='small' onClick={onClickPlots}>
+                    <TrendingUpIcon />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+              <Grid item>
+                {onClickCharts && (
+                  <Tooltip title='View details'>
+                    <IconButton size='small' onClick={onClickCharts}>
+                      <BarChartIcon />
+                    </IconButton>
+                  </Tooltip>
+                )}
+              </Grid>
+            </Grid>
           </Grid>
         )}
       </Card>
