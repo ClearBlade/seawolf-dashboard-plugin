@@ -10,6 +10,7 @@ import PumpModal from '../PumpModal';
 import WidgetShell from '../WidgetShell';
 import DieselPump from './DieselPump';
 import ElectricPump from './ElectricPump';
+import BarChartIcon from '@material-ui/icons/BarChart';
 
 export default function Pump({
   asset,
@@ -34,6 +35,7 @@ export default function Pump({
         loading={loadingAssetTypes}
         error={errorLoadingAssetTypes}
         onClickCharts={() => setModalOpen(true)}
+        overrideIcon={<BarChartIcon />}
       >
         <Grid item container direction='column' spacing={1} alignItems='center'>
           {assetType?.id === DieselPumpTypeId && (

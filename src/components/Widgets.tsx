@@ -34,17 +34,24 @@ export default function Widgets({
   } = useFetchAssetTree({
     treeId: parent?.tree_id,
   });
-  const children =
+
+  const childrenIds =
     selectedTree?.DATA?.tree?.nodes?.[parent?.id]?.children ?? [];
 
   const {
     data: childAssets,
     isLoading: loadingChildAssets,
     error: errorChildAssets,
-  } = useFetchAssetsByIds(children);
+  } = useFetchAssetsByIds(childrenIds);
   const [openEvents, setOpenEvents] = React.useState<
     Record<string, EventBackendWithRuleLabel[]>
   >({});
+
+  // See comment within useFetchAssetsByIds about why this sort occurs on the client side right now in order to maintain the same order for assets that would show in the asset tree on the asset details
+  const sortedChildAssets = childAssets?.DATA?.sort(
+    (assetA, assetB) =>
+      childrenIds.indexOf(assetA.id) - childrenIds.indexOf(assetB.id)
+  );
 
   const {
     data: events,
@@ -92,11 +99,11 @@ export default function Widgets({
     >
       <Grid item container justifyContent='flex-end' alignItems='center'>
         <Grid item>
-          <RefreshRateSetting assetIds={children} />
+          <RefreshRateSetting assetIds={childrenIds} />
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
-        {childAssets?.DATA?.map((childAsset) => {
+        {sortedChildAssets?.map((childAsset) => {
           const openEventsOnAsset = openEvents[childAsset.id];
           if (
             childAsset.type === DieselPumpTypeId ||

@@ -27,6 +27,7 @@ export default function WidgetShell({
   asset,
   onClickCharts,
   openEvents,
+  overrideIcon,
 }: {
   children: React.ReactNode;
   loading?: boolean;
@@ -34,6 +35,7 @@ export default function WidgetShell({
   asset: types.Asset['frontend'];
   onClickCharts: () => void;
   openEvents?: EventBackendWithRuleLabel[];
+  overrideIcon?: JSX.Element;
 }) {
   const classes = useWidgetShellStyles();
   return (
@@ -62,7 +64,7 @@ export default function WidgetShell({
             >
               <Grid item>
                 <IconButton size='small' onClick={onClickCharts}>
-                  <TrendingUpIcon />
+                  {overrideIcon ?? <TrendingUpIcon />}
                 </IconButton>
               </Grid>
               <Grid item>

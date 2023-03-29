@@ -9,20 +9,29 @@ import {
   IconButton,
   makeStyles,
   Typography,
+  useTheme,
 } from '@material-ui/core';
+import { Palette } from '@material-ui/core/styles/createPalette';
 import CloseIcon from '@material-ui/icons/Close';
-import { v4 as uuid } from 'uuid';
+import { PaletteColor } from '@mui/material';
 import { useSnackbar } from 'notistack';
+import { v4 as uuid } from 'uuid';
 
 const usePumpModalStyles = makeStyles((theme) => ({
+  controlFooter: {
+    padding: theme.spacing(2),
+  },
   success: {
     color: theme.palette.success.main,
   },
   disabled: {
     color: theme.palette.text.disabled,
   },
-  controlFooter: {
-    padding: theme.spacing(2),
+  error: {
+    color: theme.palette.error.main,
+  },
+  blue: {
+    color: '#1264a3',
   },
 }));
 
@@ -37,9 +46,11 @@ export default function PumpModal({
   asset: types.Asset['frontend'];
   assetType?: types.AssetType['frontend'];
 }) {
+  const { palette } = useTheme();
   const classes = usePumpModalStyles();
   if (!assetType) return null;
 
+  const customDataAttrs = Object.entries(asset.custom_data);
   return (
     <Dialog open={open} onClose={onClose} maxWidth='sm' fullWidth>
       <DialogTitle>
@@ -57,12 +68,53 @@ export default function PumpModal({
       <Divider />
       <DialogContent>
         <Grid container item direction='column' spacing={1}>
-          {Object.entries(asset.custom_data).map(([k, val]) => {
+          {customDataAttrs.length === 0 && (
+            <Typography>No data found</Typography>
+          )}
+          {customDataAttrs.map(([k, val]) => {
             const attr = assetType?.schema?.find((a) => a.attribute_name === k);
+            const { trueColorLight, falseColorLight, trueLabel, falseLabel } =
+              attr.custom_view_settings ?? {};
+
+            // Hide hidden attributes
             if (!attr || attr?.hide_attribute) return null;
+            // Get custom true/false label
+            let displayAttrVal = val as types.Asset['custom_data']['string'];
+            if (
+              typeof trueLabel === 'string' &&
+              typeof falseLabel === 'string'
+            ) {
+              displayAttrVal = displayAttrVal ? trueLabel : falseLabel;
+            }
+            // Get custom units
             const units = attr?.custom_view_settings?.units;
-            const displayVal =
-              k === 'State' ? (val ? 'Online' : 'Offline') : val;
+            // Get custom display color
+            let displayColor = 'inherit';
+            // For now, we can just use light mode colors, because seawolf has the same colors set for light/dark modes. In the future, we might need to implement sharing state with the root app to access isDarkMode
+            if (trueColorLight && falseColorLight) {
+              const trueColorCode =
+                typeof trueColorLight === 'string'
+                  ? trueColorLight
+                  : trueColorLight.colorType === 'theme'
+                  ? (
+                      palette[
+                        trueColorLight.value as keyof Palette
+                      ] as PaletteColor
+                    ).main
+                  : trueColorLight.value;
+              const falseColorCode =
+                typeof falseColorLight === 'string'
+                  ? falseColorLight
+                  : falseColorLight.colorType === 'theme'
+                  ? (
+                      palette[
+                        falseColorLight.value as keyof Palette
+                      ] as PaletteColor
+                    ).main
+                  : falseColorLight.value;
+              displayColor =
+                typeof val !== 'undefined' ? trueColorCode : falseColorCode;
+            }
 
             return (
               <Grid item container spacing={3} wrap='nowrap'>
@@ -72,17 +124,8 @@ export default function PumpModal({
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography
-                    align='left'
-                    className={
-                      k === 'State'
-                        ? val
-                          ? classes.success
-                          : classes.disabled
-                        : ''
-                    }
-                  >
-                    {displayVal}
+                  <Typography align='left' style={{ color: displayColor }}>
+                    {displayAttrVal.toString()}
                     {units ? ` ${units}` : ''}
                   </Typography>
                 </Grid>
@@ -117,7 +160,6 @@ const AssetControls = ({
   const { enqueueSnackbar } = useSnackbar();
 
   const userIsViewer = !userPerms?.admin && !userPerms?.edit;
-
   return (
     <>
       {assetType.controls_schema.map((c) => {
