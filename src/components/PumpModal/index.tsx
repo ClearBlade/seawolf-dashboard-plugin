@@ -51,6 +51,10 @@ export default function PumpModal({
   if (!assetType) return null;
 
   const customDataAttrs = Object.entries(asset.custom_data);
+  const shownAttributes = assetType.schema.filter(
+    (attr) => !attr.hide_attribute
+  );
+
   return (
     <Dialog open={open} onClose={onClose} maxWidth='sm' fullWidth>
       <DialogTitle>
@@ -71,15 +75,16 @@ export default function PumpModal({
           {customDataAttrs.length === 0 && (
             <Typography>No data found</Typography>
           )}
-          {customDataAttrs.map(([k, val]) => {
-            const attr = assetType?.schema?.find((a) => a.attribute_name === k);
+          {shownAttributes.map((attr) => {
+            const val = asset.custom_data[attr.attribute_name];
             const { trueColorLight, falseColorLight, trueLabel, falseLabel } =
               attr?.custom_view_settings ?? {};
 
-            // Hide hidden attributes
-            if (!attr || attr?.hide_attribute) return null;
             // Get custom true/false label
-            let displayAttrVal = val as types.Asset['custom_data']['string'];
+            let displayAttrVal =
+              typeof val === 'undefined'
+                ? ''
+                : (val as types.Asset['custom_data']['string']);
             if (
               typeof trueLabel === 'string' &&
               typeof falseLabel === 'string'
