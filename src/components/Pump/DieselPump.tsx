@@ -19,8 +19,8 @@ export default function DieselPump({
   assetType,
   asset,
 }: {
-  assetType: types.AssetType;
-  asset: types.Asset;
+  assetType: types.AssetType['frontend'];
+  asset: types.Asset['frontend'];
 }) {
   const classes = usePumpStyles();
   return (

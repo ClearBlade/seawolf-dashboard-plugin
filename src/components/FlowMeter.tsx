@@ -39,7 +39,7 @@ export default function FlowMeter({
           value={asset.custom_data['Rate']}
           units={
             assetType?.schema?.find((attr) => attr.attribute_name === 'Rate')
-              ?.custom_view_settings?.units
+              ?.custom_view_settings?.units as string | number | undefined
           }
         />
         <FlowAttr
@@ -47,7 +47,7 @@ export default function FlowMeter({
           units={
             assetType?.schema?.find(
               (attr) => attr.attribute_name === 'Total Barrels'
-            )?.custom_view_settings?.units
+            )?.custom_view_settings?.units as string | number | undefined
           }
         />
       </Grid>
@@ -55,7 +55,13 @@ export default function FlowMeter({
   );
 }
 
-const FlowAttr = ({ units, value }: { units?: string; value?: unknown }) => {
+const FlowAttr = ({
+  units,
+  value,
+}: {
+  units?: string | number;
+  value?: unknown;
+}) => {
   if (typeof value === 'undefined') return null;
   return (
     <Grid item>

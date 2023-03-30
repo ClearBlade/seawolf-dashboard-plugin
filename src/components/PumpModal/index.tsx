@@ -84,7 +84,7 @@ export default function PumpModal({
             let displayAttrVal =
               typeof val === 'undefined'
                 ? ''
-                : (val as types.Asset['custom_data']['string']);
+                : (val as types.Asset['frontend']['custom_data']['string']);
             if (
               typeof trueLabel === 'string' &&
               typeof falseLabel === 'string'
@@ -153,7 +153,7 @@ const AssetControls = ({
   asset,
   assetType,
 }: {
-  asset: types.Asset['frntend'];
+  asset: types.Asset['frontend'];
   assetType?: types.AssetType['frontend'];
 }) => {
   const {

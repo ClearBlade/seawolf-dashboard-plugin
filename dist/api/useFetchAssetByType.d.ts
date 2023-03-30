@@ -15,6 +15,6 @@ export declare const assetByTypeQueryKeys: {
     }];
 };
 export declare function useFetchAssetByType(type?: string): import("react-query").UseQueryResult<{
-    DATA: types.Asset[];
+    DATA: rt.Static<Thing["frontend"]>[];
     COUNT: number;
 }, unknown>;
