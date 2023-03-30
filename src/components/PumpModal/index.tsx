@@ -11,9 +11,8 @@ import {
   Typography,
   useTheme,
 } from '@material-ui/core';
-import { Palette } from '@material-ui/core/styles/createPalette';
+import { Palette, PaletteColor } from '@material-ui/core/styles/createPalette';
 import CloseIcon from '@material-ui/icons/Close';
-import { PaletteColor } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { v4 as uuid } from 'uuid';
 import { useIsMobile } from '../../hooks/useIsMobile';
@@ -104,7 +103,14 @@ export default function PumpModal({
             // Get custom display color
             let displayColor = 'inherit';
             // For now, we can just use light mode colors, because seawolf has the same colors set for light/dark modes. In the future, we might need to implement sharing state with the root app to access isDarkMode
-            if (trueColorLight && falseColorLight) {
+            if (
+              trueColorLight &&
+              falseColorLight &&
+              typeof trueColorLight === 'object' &&
+              typeof falseColorLight === 'object' &&
+              'colorType' in trueColorLight &&
+              'colorType' in falseColorLight
+            ) {
               const trueColorCode =
                 typeof trueColorLight === 'string'
                   ? trueColorLight

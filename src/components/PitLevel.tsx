@@ -20,16 +20,25 @@ export default function PitLevel({
   const assetType = assetTypesQuery?.DATA[asset.type];
 
   const currFill = asset.custom_data['Level'];
+  const currFillNum =
+    typeof currFill === 'boolean'
+      ? 0
+      : typeof currFill === 'string'
+      ? parseFloat(currFill)
+      : (currFill as number);
   const currFillUnits = assetType?.schema?.find(
     (attr) => attr.attribute_name === 'Level'
   )?.custom_view_settings?.units;
 
   const maxFill = asset.custom_data['Max Fill Level'];
   const maxFillNum =
-    typeof maxFill === 'string' ? parseFloat(maxFill) : maxFill;
+    typeof maxFill === 'boolean'
+      ? 0
+      : typeof maxFill === 'string'
+      ? parseFloat(maxFill)
+      : (maxFill as number);
 
   const nav = useNavigate();
-
   return (
     <WidgetShell
       asset={asset}
@@ -42,7 +51,7 @@ export default function PitLevel({
     >
       <Grid container item justifyContent='center'>
         <Grid item>
-          <FillPlot currentFill={currFill} maxFill={maxFillNum} />
+          <FillPlot currentFill={currFillNum} maxFill={maxFillNum} />
         </Grid>
       </Grid>
 
@@ -50,7 +59,7 @@ export default function PitLevel({
         <Grid item>
           <Typography variant='body2'>
             <b>
-              {currFill}
+              {currFillNum}
               {typeof currFill !== 'undefined' && currFillUnits
                 ? ` ${currFillUnits}`
                 : ''}

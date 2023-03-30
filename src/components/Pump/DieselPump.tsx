@@ -44,7 +44,7 @@ export default function DieselPump({
         units={
           assetType?.schema?.find(
             (attr) => attr.attribute_name === 'Suction Pressure'
-          )?.custom_view_settings?.units
+          )?.custom_view_settings?.units as string | number
         }
       />
       <PumpAttr
@@ -53,7 +53,7 @@ export default function DieselPump({
         units={
           assetType?.schema?.find(
             (attr) => attr.attribute_name === 'Discharge Pressure'
-          )?.custom_view_settings?.units
+          )?.custom_view_settings?.units as string | number
         }
       />
       <PumpAttr
@@ -62,7 +62,7 @@ export default function DieselPump({
         units={
           assetType?.schema?.find(
             (attr) => attr.attribute_name === 'Temperature'
-          )?.custom_view_settings?.units
+          )?.custom_view_settings?.units as string | number
         }
       />
     </>

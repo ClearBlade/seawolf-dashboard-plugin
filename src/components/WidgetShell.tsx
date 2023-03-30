@@ -4,6 +4,7 @@ import {
   IconButton,
   makeStyles,
   Typography,
+  Tooltip,
 } from '@material-ui/core';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import { Skeleton } from '@material-ui/lab';
@@ -12,7 +13,6 @@ import { EventBackendWithRuleLabel } from '../types';
 import { types } from '@clearblade/ia-mfe';
 import OpenEventIndicator from './OpenEventIndicator';
 import BarChartIcon from '@material-ui/icons/BarChart';
-import { Tooltip } from '@mui/material';
 
 const useWidgetShellStyles = makeStyles((theme) => ({
   shell: {

@@ -6,7 +6,7 @@ const PumpAttr = ({
   value,
 }: {
   label: string;
-  units?: string;
+  units?: string | number;
   value?: unknown;
 }) => {
   if (typeof value === 'undefined') return null;
