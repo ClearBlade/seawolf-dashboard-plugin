@@ -72,10 +72,12 @@ export default function WidgetShell({
                 </Typography>
               </Grid>
               <Grid item>
-                <OpenEventIndicator
-                  openEvents={openEvents}
-                  assetId={asset?.id}
-                />
+                <Tooltip title='Go to events'>
+                  <OpenEventIndicator
+                    openEvents={openEvents}
+                    assetId={asset?.id}
+                  />
+                </Tooltip>
               </Grid>
             </Grid>
 

@@ -16,6 +16,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { PaletteColor } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { v4 as uuid } from 'uuid';
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 const usePumpModalStyles = makeStyles((theme) => ({
   controlFooter: {
@@ -48,6 +49,7 @@ export default function PumpModal({
 }) {
   const { palette } = useTheme();
   const classes = usePumpModalStyles();
+  const isMobile = useIsMobile();
   if (!assetType) return null;
 
   const customDataAttrs = Object.entries(asset.custom_data);
@@ -56,7 +58,13 @@ export default function PumpModal({
   );
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth='sm' fullWidth>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      maxWidth={isMobile ? undefined : 'sm'}
+      fullScreen={isMobile}
+      fullWidth
+    >
       <DialogTitle>
         <Grid container justifyContent='space-between' alignItems='center'>
           <Grid item>
