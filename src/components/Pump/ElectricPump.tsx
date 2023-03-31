@@ -1,4 +1,4 @@
-import { types } from '@clearblade/ia-mfe';
+import { AssetType, Asset } from '@clearblade/ia-mfe-core';
 import { Grid, makeStyles } from '@material-ui/core';
 import ToysIcon from '@material-ui/icons/Toys';
 import PumpAttr from './PumpAttr';
@@ -19,8 +19,8 @@ export default function ElectricPump({
   assetType,
   asset,
 }: {
-  assetType: types.AssetType['frontend'];
-  asset: types.Asset['frontend'];
+  assetType: AssetType['frontend'];
+  asset: Asset['frontend'];
 }) {
   const classes = usePumpStyles();
 

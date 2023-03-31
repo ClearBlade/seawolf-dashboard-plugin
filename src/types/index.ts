@@ -1,5 +1,5 @@
-import { types } from '@clearblade/ia-mfe';
+import { Event } from '@clearblade/ia-mfe-core';
 
-export type EventBackendWithRuleLabel = types.Event['backend'] & {
+export type EventBackendWithRuleLabel = Event['backend'] & {
   rule_label: string;
 };

@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { types } from '@clearblade/ia-mfe';
+import { core } from '@clearblade/ia-mfe-core'
 export default function PumpModal({ open, onClose, asset, assetType, }: {
     open: boolean;
     onClose: () => void;

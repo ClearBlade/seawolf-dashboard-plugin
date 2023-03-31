@@ -1,4 +1,5 @@
-import { types, utils } from '@clearblade/ia-mfe';
+import { Asset } from '@clearblade/ia-mfe-core';
+import { useAssetTypesCache } from '@clearblade/ia-mfe-react';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import Plot from 'react-plotly.js';
 import { useNavigate } from 'react-router-dom';
@@ -9,14 +10,14 @@ export default function PitLevel({
   asset,
   openEvents,
 }: {
-  asset: types.Asset['frontend'];
+  asset: Asset['frontend'];
   openEvents?: EventBackendWithRuleLabel[];
 }) {
   const {
     data: assetTypesQuery,
     isLoading: loadingAssetTypes,
     isError: errorLoadingAssetTypes,
-  } = utils.useAssetTypesCache();
+  } = useAssetTypesCache();
   const assetType = assetTypesQuery?.DATA[asset.type];
 
   const currFill = asset.custom_data['Level'];

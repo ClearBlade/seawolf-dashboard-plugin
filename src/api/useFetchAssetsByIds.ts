@@ -1,4 +1,8 @@
-import { utils, types } from '@clearblade/ia-mfe';
+import {
+  Asset,
+  createFrontendAssetsQuery,
+  fetchAssets,
+} from '@clearblade/ia-mfe-core';
 import { useEffect } from 'react';
 import { QueryFunctionContext, useQuery, useQueryClient } from 'react-query';
 import useRefreshRateStore from '../stores/useRefreshRateStore';
@@ -12,7 +16,7 @@ export const assetByIdsFetcherFn = ({
 }: QueryFunctionContext<
   ReturnType<typeof assetByIdsQueryKeys.detail>
 >): Promise<{
-  DATA: undefined | types.Asset['frontend'][];
+  DATA: undefined | Asset['frontend'][];
   COUNT: number;
 }> => {
   if (!ids || !ids.length) {
@@ -21,14 +25,14 @@ export const assetByIdsFetcherFn = ({
       COUNT: 0,
     }));
   }
-  const query = utils.createFrontendAssetsQuery({
+  const query = createFrontendAssetsQuery({
     Filters: [
       [{ type: 'default', operator: 'IN', field: 'id', value: ids ?? [] }],
     ],
     // I wanted to order the array by the order of the "IN" values, but all solutions either involve editing how the query is built within createFrontendAssetsQuery. Even passing multiple values within the Order array doesn't work because currently assetsV2.read is only using Order[0]
     //https://stackoverflow.com/questions/866465/order-by-the-in-value-list
   });
-  return utils.fetchAssets(new AbortController(), { query });
+  return fetchAssets(new AbortController(), { query });
 };
 
 export const assetByIdsQueryKeys = {

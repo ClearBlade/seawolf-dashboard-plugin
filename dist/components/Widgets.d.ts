@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { types } from '@clearblade/ia-mfe';
-export default function Widgets({ parent, }: {
-    parent?: types.Asset['frontend'];
+import { Asset } from '@clearblade/ia-mfe-core';
+export default function Widgets({ parent }: {
+    parent?: Asset['frontend'];
 }): JSX.Element;

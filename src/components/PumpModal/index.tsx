@@ -1,4 +1,3 @@
-import { types, utils } from '@clearblade/ia-mfe';
 import {
   Dialog,
   DialogActions,
@@ -16,6 +15,13 @@ import CloseIcon from '@material-ui/icons/Close';
 import { useSnackbar } from 'notistack';
 import { v4 as uuid } from 'uuid';
 import { useIsMobile } from '../../hooks/useIsMobile';
+import { Asset, AssetType } from '@clearblade/ia-mfe-core';
+import {
+  useAppPlugins,
+  useMessaging,
+  useUserInfo,
+  useUserPermissions,
+} from '@clearblade/ia-mfe-react';
 
 const usePumpModalStyles = makeStyles((theme) => ({
   controlFooter: {
@@ -43,8 +49,8 @@ export default function PumpModal({
 }: {
   open: boolean;
   onClose: () => void;
-  asset: types.Asset['frontend'];
-  assetType?: types.AssetType['frontend'];
+  asset: Asset['frontend'];
+  assetType?: AssetType['frontend'];
 }) {
   const { palette } = useTheme();
   const classes = usePumpModalStyles();
@@ -91,7 +97,7 @@ export default function PumpModal({
             let displayAttrVal =
               typeof val === 'undefined'
                 ? ''
-                : (val as types.Asset['frontend']['custom_data']['string']);
+                : (val as Asset['frontend']['custom_data']['string']);
             if (
               typeof trueLabel === 'string' &&
               typeof falseLabel === 'string'
@@ -167,15 +173,15 @@ const AssetControls = ({
   asset,
   assetType,
 }: {
-  asset: types.Asset['frontend'];
-  assetType?: types.AssetType['frontend'];
+  asset: Asset['frontend'];
+  assetType?: AssetType['frontend'];
 }) => {
   const {
     assetControlPlugins: { getPluginById },
-  } = utils.useAppPlugins();
-  const { status, publish } = utils.useMessaging();
-  const { data: userInfo } = utils.useUserInfo();
-  const { data: userPerms } = utils.useUserPermissions();
+  } = useAppPlugins();
+  const { status, publish } = useMessaging();
+  const { data: userInfo } = useUserInfo();
+  const { data: userPerms } = useUserPermissions();
   const { enqueueSnackbar } = useSnackbar();
 
   const userIsViewer = !userPerms?.admin && !userPerms?.edit;

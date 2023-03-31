@@ -1,4 +1,3 @@
-import { types, utils } from '@clearblade/ia-mfe';
 import { Grid } from '@material-ui/core';
 import { useState } from 'react';
 import {
@@ -11,19 +10,21 @@ import WidgetShell from '../WidgetShell';
 import DieselPump from './DieselPump';
 import ElectricPump from './ElectricPump';
 import { useNavigate } from 'react-router-dom';
+import { Asset } from '@clearblade/ia-mfe-core';
+import { useAssetTypesCache } from '@clearblade/ia-mfe-react';
 
 export default function Pump({
   asset,
   openEvents,
 }: {
-  asset: types.Asset['frontend'];
+  asset: Asset['frontend'];
   openEvents?: EventBackendWithRuleLabel[];
 }) {
   const {
     data: assetTypesQuery,
     isLoading: loadingAssetTypes,
     isError: errorLoadingAssetTypes,
-  } = utils.useAssetTypesCache();
+  } = useAssetTypesCache();
   const assetType = assetTypesQuery?.DATA[asset.type];
   const [modalOpen, setModalOpen] = useState(false);
   const nav = useNavigate();

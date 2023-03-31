@@ -1,4 +1,5 @@
-import { utils, types } from '@clearblade/ia-mfe';
+import { Asset } from '@clearblade/ia-mfe-core';
+import { useAssetTypesCache } from '@clearblade/ia-mfe-react';
 import { Grid, Typography } from '@material-ui/core';
 import WavesIcon from '@material-ui/icons/Waves';
 import { useNavigate } from 'react-router-dom';
@@ -9,14 +10,14 @@ export default function FlowMeter({
   asset,
   openEvents,
 }: {
-  asset: types.Asset['frontend'];
+  asset: Asset['frontend'];
   openEvents?: EventBackendWithRuleLabel[];
 }) {
   const {
     data: assetTypesQuery,
     isLoading: loadingAssetTypes,
     isError: errorLoadingAssetTypes,
-  } = utils.useAssetTypesCache();
+  } = useAssetTypesCache();
   const assetType = assetTypesQuery?.DATA[asset.type];
 
   const nav = useNavigate();

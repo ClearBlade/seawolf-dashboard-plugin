@@ -1,7 +1,7 @@
 /// <reference types="react" />
-import { types } from '@clearblade/ia-mfe';
+import { Asset } from '@clearblade/ia-mfe-core';
 import { EventBackendWithRuleLabel } from '../types';
 export default function PitLevel({ asset, openEvents, }: {
-    asset: types.Asset['frontend'];
+    asset: Asset['frontend'];
     openEvents?: EventBackendWithRuleLabel[];
 }): JSX.Element;

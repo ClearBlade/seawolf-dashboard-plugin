@@ -1,4 +1,8 @@
-import { types, utils } from '@clearblade/ia-mfe';
+import { Asset, eventUpdater, tryParse } from '@clearblade/ia-mfe-core';
+import {
+  useDbAndLiveDataForEvents,
+  useOpenEventsForAssets,
+} from '@clearblade/ia-mfe-react';
 import { Grid, makeStyles } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import React from 'react';
@@ -21,11 +25,7 @@ const useWidgetsStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Widgets({
-  parent,
-}: {
-  parent?: types.Asset['frontend'];
-}) {
+export default function Widgets({ parent }: { parent?: Asset['frontend'] }) {
   const classes = useWidgetsStyles();
   const {
     data: selectedTree,
@@ -57,15 +57,15 @@ export default function Widgets({
     data: events,
     error: eventsError,
     loading: eventsLoading,
-  } = utils.useDbAndLiveDataForEvents(
-    () => utils.useOpenEventsForAssets(),
+  } = useDbAndLiveDataForEvents(
+    () => useOpenEventsForAssets(),
     [
       {
         topics: [
           '_dbupdate/_monitor/_events',
           `_dbupdate/_monitor/_events/_platform`,
         ],
-        updater: utils.eventUpdater,
+        updater: eventUpdater,
       },
     ]
   );
@@ -74,7 +74,7 @@ export default function Widgets({
     if (events) {
       setOpenEvents(
         events.DATA.reduce((acc, event) => {
-          const eventAssets = utils.tryParse(event.assets, {});
+          const eventAssets = tryParse(event.assets, {});
           Object.keys(eventAssets).forEach((assetId) => {
             acc[assetId] !== undefined
               ? acc[assetId].push(event)

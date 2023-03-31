@@ -1,6 +1,6 @@
 /// <reference types="react" />
-import { types } from '@clearblade/ia-mfe';
+import { AssetType, Asset } from '@clearblade/ia-mfe-core';
 export default function ElectricPump({ assetType, asset, }: {
-    assetType: types.AssetType['frontend'];
-    asset: types.Asset['frontend'];
+    assetType: AssetType['frontend'];
+    asset: Asset['frontend'];
 }): JSX.Element;

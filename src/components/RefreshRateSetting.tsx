@@ -1,4 +1,4 @@
-import { utils } from '@clearblade/ia-mfe';
+import { appQueryClient } from '@clearblade/ia-mfe-react';
 import {
   Box,
   Button,
@@ -72,7 +72,7 @@ export default function RefreshRateSetting({
           <Button
             size='small'
             onClick={() =>
-              utils.appQueryClient.invalidateQueries(
+              appQueryClient.invalidateQueries(
                 assetByIdsQueryKeys.detail({ ids: assetIds })
               )
             }

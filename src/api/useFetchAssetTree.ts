@@ -1,4 +1,8 @@
-import { utils, types } from '@clearblade/ia-mfe';
+import {
+  AssetTreeSchema,
+  fetchAssetTrees,
+  createPlatformQuery,
+} from '@clearblade/ia-mfe-core';
 import { QueryFunctionContext, useQuery } from 'react-query';
 
 export const assetTreeFetcherFn = ({
@@ -10,21 +14,16 @@ export const assetTreeFetcherFn = ({
 }: QueryFunctionContext<
   ReturnType<typeof assetTreeQueryKeys.detail>
 >): Promise<{
-  DATA: types.AssetTreeSchema['frontend'] | undefined;
+  DATA: AssetTreeSchema['frontend'] | undefined;
   COUNT: number;
 }> => {
   if (treeId && treeId.length > 0) {
-    return utils
-      .fetchAssetTrees(new AbortController(), {
-        query: utils
-          .createPlatformQuery()
-          .setPage(1000, 1)
-          .equalTo('id', treeId),
-      })
-      .then((resp) => ({
-        DATA: resp.DATA[0],
-        COUNT: resp.COUNT,
-      }));
+    return fetchAssetTrees(new AbortController(), {
+      query: createPlatformQuery().setPage(1000, 1).equalTo('id', treeId),
+    }).then((resp) => ({
+      DATA: resp.DATA[0],
+      COUNT: resp.COUNT,
+    }));
   }
   return new Promise(() => ({
     COUNT: 0,

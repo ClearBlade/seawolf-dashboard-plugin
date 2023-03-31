@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { types } from '@clearblade/ia-mfe';
+import { core } from '@clearblade/ia-mfe-core'
 import { EventBackendWithRuleLabel } from '../types';
 export default function Pump({ asset, openEvents, }: {
     asset: types.Asset['frontend'];

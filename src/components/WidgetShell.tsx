@@ -10,7 +10,7 @@ import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import { Skeleton } from '@material-ui/lab';
 import React from 'react';
 import { EventBackendWithRuleLabel } from '../types';
-import { types } from '@clearblade/ia-mfe';
+import { Asset } from '@clearblade/ia-mfe-core';
 import OpenEventIndicator from './OpenEventIndicator';
 import BarChartIcon from '@material-ui/icons/BarChart';
 
@@ -35,7 +35,7 @@ export default function WidgetShell({
   children: React.ReactNode;
   loading?: boolean;
   error?: boolean;
-  asset: types.Asset['frontend'];
+  asset: Asset['frontend'];
   onClickPlots: () => void;
   onClickCharts?: () => void;
   openEvents?: EventBackendWithRuleLabel[];

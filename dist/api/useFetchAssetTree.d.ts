@@ -1,7 +1,7 @@
-import { types } from '@clearblade/ia-mfe';
+import { AssetTreeSchema } from '@clearblade/ia-mfe-core';
 import { QueryFunctionContext } from 'react-query';
 export declare const assetTreeFetcherFn: ({ queryKey: [{ params: { treeId }, },], }: QueryFunctionContext<ReturnType<typeof assetTreeQueryKeys.detail>>) => Promise<{
-    DATA: types.AssetTreeSchema['frontend'] | undefined;
+    DATA: AssetTreeSchema['frontend'] | undefined;
     COUNT: number;
 }>;
 export declare const assetTreeQueryKeys: {

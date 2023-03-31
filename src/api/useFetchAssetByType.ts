@@ -1,4 +1,8 @@
-import { utils, types } from '@clearblade/ia-mfe';
+import {
+  createFrontendAssetsQuery,
+  fetchAssets,
+  Asset,
+} from '@clearblade/ia-mfe-core';
 import { useEffect } from 'react';
 import { QueryFunctionContext, useQuery, useQueryClient } from 'react-query';
 
@@ -11,7 +15,7 @@ export const assetByTypeFetcherFn = ({
 }: QueryFunctionContext<
   ReturnType<typeof assetByTypeQueryKeys.detail>
 >): Promise<{
-  DATA: undefined | types.Asset['frontend'][];
+  DATA: undefined | Asset['frontend'][];
   COUNT: number;
 }> => {
   if (!type) {
@@ -20,12 +24,12 @@ export const assetByTypeFetcherFn = ({
       COUNT: 0,
     }));
   }
-  const query = utils.createFrontendAssetsQuery({
+  const query = createFrontendAssetsQuery({
     Filters: [
       [{ type: 'default', operator: '=', field: 'type', value: type ?? '' }],
     ],
   });
-  return utils.fetchAssets(new AbortController(), { query });
+  return fetchAssets(new AbortController(), { query });
 };
 
 export const assetByTypeQueryKeys = {
