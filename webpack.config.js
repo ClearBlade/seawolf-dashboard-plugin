@@ -11,7 +11,8 @@ module.exports = (webpackConfigEnv, argv) => {
 
   return merge(defaultConfig, {
     externals: [
-      '@clearblade/ia-mfe',
+      '@clearblade/ia-mfe-core',
+      '@clearblade/ia-mfe-react',
       'react-query',
       '@material-ui/core',
       '@material-ui/icons',
