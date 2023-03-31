@@ -18,6 +18,7 @@ module.exports = (webpackConfigEnv, argv) => {
       '@material-ui/icons',
       '@material-ui/lab',
       'react-router-dom',
+      'single-spa',
     ],
   });
 };
