@@ -2,9 +2,10 @@
   "extends": "ts-config-single-spa",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "declarationDir": "dist"
+    "declarationDir": "dist",
+    "skipLibCheck": true
   },
-  "files": ["src/seawolf-dashboard-plugin.tsx"],
+  "files": ["node_modules/@clearblade/code-service-types/types/index.d.ts", "node_modules/@clearblade/code-service-types/types/globals.d.ts"],
   "include": ["src/**/*"],
   "exclude": ["src/**/*.test*"]
 }

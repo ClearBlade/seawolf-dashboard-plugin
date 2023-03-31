@@ -16,16 +16,14 @@ export declare const assetByIdsQueryKeys: {
 };
 export declare function useFetchAssetsByIds(ids?: string[]): import("react-query").UseQueryResult<{
     DATA: {
-        description: string;
         type: string;
         id: string;
-        label: string;
-        image: string;
-        parent: string;
-        item_id: string;
         owners: string[];
         latitude: number;
         longitude: number;
+        label: string;
+        description: string;
+        image: string;
         last_updated: string;
         location_updated: string;
         custom_data: {
@@ -38,6 +36,7 @@ export declare function useFetchAssetsByIds(ids?: string[]): import("react-query
             [x: number]: string;
             [x: symbol]: string;
         };
+        parent: string;
         location_x: number;
         location_y: number;
         location_z: number;
@@ -49,6 +48,7 @@ export declare function useFetchAssetsByIds(ids?: string[]): import("react-query
         group_id: string;
         tree_id: string;
         is_root: boolean;
+        item_id: string;
     }[];
     COUNT: number;
 }, unknown>;

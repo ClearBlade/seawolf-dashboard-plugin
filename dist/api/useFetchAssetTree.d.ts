@@ -19,6 +19,7 @@ export declare function useFetchAssetTree({ treeId }: {
 }): import("react-query").UseQueryResult<{
     DATA: {
         id: string;
+        item_id: string;
         tree: {
             rootID: string;
             treeID: string;
@@ -40,7 +41,6 @@ export declare function useFetchAssetTree({ treeId }: {
                 };
             };
         };
-        item_id: string;
     };
     COUNT: number;
 }, unknown>;
