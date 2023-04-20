@@ -2,6 +2,7 @@ import { AssetType, Asset } from '@clearblade/ia-mfe-core';
 import { Grid, makeStyles } from '@material-ui/core';
 import ToysIcon from '@material-ui/icons/Toys';
 import PumpAttr from './PumpAttr';
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 const usePumpStyles = makeStyles((theme) => ({
   success: {
@@ -22,12 +23,13 @@ export default function DieselPump({
   assetType: AssetType['frontend'];
   asset: Asset['frontend'];
 }) {
+  const isMobile = useIsMobile();
   const classes = usePumpStyles();
   return (
     <>
       <Grid item>
         <ToysIcon
-          style={{ fontSize: '50px' }}
+          style={{ fontSize: isMobile ? '25px' : '50px' }}
           className={
             !asset.custom_data['Network Connection']
               ? classes.error
@@ -63,6 +65,14 @@ export default function DieselPump({
           assetType?.schema?.find(
             (attr) => attr.attribute_name === 'Temperature'
           )?.custom_view_settings?.units as string | number
+        }
+      />
+      <PumpAttr
+        label={'Battery:'}
+        value={asset.custom_data['Battery']}
+        units={
+          assetType?.schema?.find((attr) => attr.attribute_name === 'Battery')
+            ?.custom_view_settings?.units as string | number
         }
       />
     </>

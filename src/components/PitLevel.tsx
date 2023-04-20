@@ -5,6 +5,7 @@ import Plot from 'react-plotly.js';
 import { useNavigate } from 'react-router-dom';
 import { EventBackendWithRuleLabel } from '../types';
 import WidgetShell from './WidgetShell';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 export default function PitLevel({
   asset,
@@ -83,6 +84,8 @@ const FillPlot = ({
   maxFill: number;
 }) => {
   const classes = useFillPlotStyles();
+  const isMobile = useIsMobile();
+
   const data = [
     {
       type: 'indicator',
@@ -107,7 +110,7 @@ const FillPlot = ({
   ];
 
   var layout = {
-    width: 280,
+    width: isMobile ? 160 : 270,
     height: 100,
     margin: {
       t: 10,

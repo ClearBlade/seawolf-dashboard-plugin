@@ -5,6 +5,7 @@ import {
   makeStyles,
   Typography,
   Tooltip,
+  Theme,
 } from '@material-ui/core';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import { Skeleton } from '@material-ui/lab';
@@ -13,15 +14,18 @@ import { EventBackendWithRuleLabel } from '../types';
 import { Asset } from '@clearblade/ia-mfe-core';
 import OpenEventIndicator from './OpenEventIndicator';
 import BarChartIcon from '@material-ui/icons/BarChart';
+import { useIsMobile } from '../hooks/useIsMobile';
 
-const useWidgetShellStyles = makeStyles((theme) => ({
-  shell: {
-    padding: theme.spacing(2),
-    height: theme.spacing(38),
-    width: theme.spacing(38),
-    display: 'flex',
-  },
-}));
+const useWidgetShellStyles = makeStyles<Theme, { isMobile: boolean }>(
+  (theme) => ({
+    shell: ({ isMobile }) => ({
+      padding: theme.spacing(2),
+      height: theme.spacing(isMobile ? 40 : 40),
+      width: theme.spacing(isMobile ? 20 : 35),
+      display: 'flex',
+    }),
+  })
+);
 
 export default function WidgetShell({
   children,
@@ -40,7 +44,16 @@ export default function WidgetShell({
   onClickCharts?: () => void;
   openEvents?: EventBackendWithRuleLabel[];
 }) {
-  const classes = useWidgetShellStyles();
+  const isMobile = useIsMobile();
+  const classes = useWidgetShellStyles({ isMobile });
+  const OpenEventIcon = (
+    <Grid item>
+      <Tooltip title='Go to events'>
+        <OpenEventIndicator openEvents={openEvents} assetId={asset?.id} />
+      </Tooltip>
+    </Grid>
+  );
+
   return (
     <Grid item>
       <Card className={classes.shell}>
@@ -56,6 +69,7 @@ export default function WidgetShell({
             direction='column'
             justifyContent='space-between'
             spacing={2}
+            wrap='nowrap'
           >
             <Grid
               item
@@ -65,20 +79,13 @@ export default function WidgetShell({
               wrap='nowrap'
               alignItems='flex-start'
             >
-              <Grid item></Grid>
+              {!isMobile && <Grid item></Grid>}
               <Grid item>
                 <Typography>
                   <b>{asset?.label || asset?.id}</b>
                 </Typography>
               </Grid>
-              <Grid item>
-                <Tooltip title='Go to events'>
-                  <OpenEventIndicator
-                    openEvents={openEvents}
-                    assetId={asset?.id}
-                  />
-                </Tooltip>
-              </Grid>
+              {!isMobile && OpenEventIcon}
             </Grid>
 
             {children}
@@ -98,6 +105,7 @@ export default function WidgetShell({
                   </IconButton>
                 </Tooltip>
               </Grid>
+              {isMobile && OpenEventIcon}
               <Grid item>
                 {onClickCharts && (
                   <Tooltip title='View details'>

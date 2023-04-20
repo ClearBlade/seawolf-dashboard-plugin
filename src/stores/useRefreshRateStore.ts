@@ -1,4 +1,5 @@
 import create from 'zustand';
+import { TimeUnitMultiplier } from '../constants.ts/refreshRate';
 
 export interface RefreshRateSlice {
   refreshRate?: number;
@@ -8,7 +9,7 @@ export interface RefreshRateSlice {
 }
 
 const useRefreshRateStore = create<RefreshRateSlice>((set) => ({
-  refreshRate: undefined,
+  refreshRate: TimeUnitMultiplier.SECONDS * 5,
   setRefreshRate: (refreshRate) => {
     set({ refreshRate });
   },

@@ -5,6 +5,7 @@ import WavesIcon from '@material-ui/icons/Waves';
 import { useNavigate } from 'react-router-dom';
 import { EventBackendWithRuleLabel } from '../types/index';
 import WidgetShell from './WidgetShell';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 export default function FlowMeter({
   asset,
@@ -21,6 +22,7 @@ export default function FlowMeter({
   const assetType = assetTypesQuery?.DATA[asset.type];
 
   const nav = useNavigate();
+  const isMobile = useIsMobile();
 
   return (
     <WidgetShell
@@ -34,7 +36,7 @@ export default function FlowMeter({
     >
       <Grid item container direction='column' spacing={1} alignItems='center'>
         <Grid item>
-          <WavesIcon style={{ fontSize: '50px' }} />
+          <WavesIcon style={{ fontSize: isMobile ? '25px' : '50px' }} />
         </Grid>
         <FlowAttr
           value={asset.custom_data['Rate']}

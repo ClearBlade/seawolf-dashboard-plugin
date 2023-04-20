@@ -59,7 +59,7 @@ export default function RefreshRateSetting({
   ]);
 
   const anchorRef = React.useRef(null);
-  const [selectedIdx, setSelectedIdx] = React.useState(0);
+  const [selectedIdx, setSelectedIdx] = React.useState(1);
   const [menuOpen, setMenuOpen] = React.useState(false);
   const selectedRate = RefreshRateOptions[selectedIdx];
   const menuRef = React.useRef(null);

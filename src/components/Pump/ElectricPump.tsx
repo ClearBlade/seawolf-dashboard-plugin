@@ -2,6 +2,7 @@ import { AssetType, Asset } from '@clearblade/ia-mfe-core';
 import { Grid, makeStyles } from '@material-ui/core';
 import ToysIcon from '@material-ui/icons/Toys';
 import PumpAttr from './PumpAttr';
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 const usePumpStyles = makeStyles((theme) => ({
   success: {
@@ -23,12 +24,13 @@ export default function ElectricPump({
   asset: Asset['frontend'];
 }) {
   const classes = usePumpStyles();
+  const isMobile = useIsMobile();
 
   return (
     <>
       <Grid item>
         <ToysIcon
-          style={{ fontSize: '50px' }}
+          style={{ fontSize: isMobile ? '25px' : '50px' }}
           className={
             !asset.custom_data['Network Connection']
               ? classes.error

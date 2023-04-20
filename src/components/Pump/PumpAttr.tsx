@@ -1,4 +1,10 @@
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, makeStyles } from '@material-ui/core';
+
+const usePumpAttrStyles = makeStyles({
+  text: {
+    align: 'left',
+  },
+});
 
 const PumpAttr = ({
   label,
@@ -9,10 +15,11 @@ const PumpAttr = ({
   units?: string | number;
   value?: unknown;
 }) => {
+  const classes = usePumpAttrStyles();
   if (typeof value === 'undefined') return null;
   return (
     <Grid item>
-      <Typography variant='body2'>
+      <Typography variant='body2' className={classes.text}>
         {label} {value}
         {units ? ` ${units}` : ''}
       </Typography>
