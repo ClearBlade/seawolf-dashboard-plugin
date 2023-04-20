@@ -1,3 +1,10 @@
+import { Asset, AssetType } from '@clearblade/ia-mfe-core';
+import {
+  useAppPlugins,
+  useMessaging,
+  useUserInfo,
+  useUserPermissions,
+} from '@clearblade/ia-mfe-react';
 import {
   Dialog,
   DialogActions,
@@ -12,16 +19,8 @@ import {
 } from '@material-ui/core';
 import { Palette, PaletteColor } from '@material-ui/core/styles/createPalette';
 import CloseIcon from '@material-ui/icons/Close';
-import { useSnackbar } from 'notistack';
 import { v4 as uuid } from 'uuid';
 import { useIsMobile } from '../../hooks/useIsMobile';
-import { Asset, AssetType } from '@clearblade/ia-mfe-core';
-import {
-  useAppPlugins,
-  useMessaging,
-  useUserInfo,
-  useUserPermissions,
-} from '@clearblade/ia-mfe-react';
 
 const usePumpModalStyles = makeStyles((theme) => ({
   controlFooter: {
@@ -182,7 +181,6 @@ const AssetControls = ({
   const { status, publish } = useMessaging();
   const { data: userInfo } = useUserInfo();
   const { data: userPerms } = useUserPermissions();
-  const { enqueueSnackbar } = useSnackbar();
 
   const userIsViewer = !userPerms?.admin && !userPerms?.edit;
   return (
@@ -227,9 +225,6 @@ const AssetControls = ({
                       `_dbupdate/_monitor/_asset/${asset.id}/command/${commandId}/request`,
                       JSON.stringify(payload)
                     );
-                    enqueueSnackbar('Command sent', {
-                      variant: 'success',
-                    });
                   }
                 }}
                 // Normally disabling is based off of whether user has access permissions from custom_settings, but that was more difficult to implement for microfrontends so we did it based on whether the user is a viewer
