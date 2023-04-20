@@ -21,6 +21,7 @@ import { Palette, PaletteColor } from '@material-ui/core/styles/createPalette';
 import CloseIcon from '@material-ui/icons/Close';
 import { v4 as uuid } from 'uuid';
 import { useIsMobile } from '../../hooks/useIsMobile';
+import { useState } from 'react';
 
 const usePumpModalStyles = makeStyles((theme) => ({
   controlFooter: {
@@ -181,6 +182,8 @@ const AssetControls = ({
   const { status, publish } = useMessaging();
   const { data: userInfo } = useUserInfo();
   const { data: userPerms } = useUserPermissions();
+  const classes = usePumpModalStyles();
+  const [commandsSent, setCommandsSent] = useState<Record<string, boolean>>({}); // Doing this manually be snackbar caused bug
 
   const userIsViewer = !userPerms?.admin && !userPerms?.edit;
   return (
@@ -225,12 +228,21 @@ const AssetControls = ({
                       `_dbupdate/_monitor/_asset/${asset.id}/command/${commandId}/request`,
                       JSON.stringify(payload)
                     );
+                    setCommandsSent((prev) => ({ ...prev, [c.uuid]: true }));
+                    setTimeout(() => {
+                      setCommandsSent((prev) => ({ ...prev, [c.uuid]: false }));
+                    }, 2000);
                   }
                 }}
                 // Normally disabling is based off of whether user has access permissions from custom_settings, but that was more difficult to implement for microfrontends so we did it based on whether the user is a viewer
                 disabled={!status.messaging || userIsViewer}
                 isSubmitting={false}
               />
+              {commandsSent[c.uuid] && (
+                <Typography variant='body2' className={classes.success}>
+                  Command sent!
+                </Typography>
+              )}
             </Grid>
           );
         }
