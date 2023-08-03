@@ -3,7 +3,7 @@ import {
   useAppPlugins,
   useMessaging,
   useUserInfo,
-  useUserPermissions,
+  useCustomPermission,
 } from '@clearblade/ia-mfe-react';
 import {
   Dialog,
@@ -181,11 +181,19 @@ const AssetControls = ({
   } = useAppPlugins();
   const { status, publish } = useMessaging();
   const { data: userInfo } = useUserInfo();
-  const { data: userPerms } = useUserPermissions();
   const classes = usePumpModalStyles();
   const [commandsSent, setCommandsSent] = useState<Record<string, boolean>>({}); // Doing this manually be snackbar caused bug
 
-  const userIsViewer = !userPerms?.admin && !userPerms?.edit;
+  const assetsAccess = useCustomPermission('ia.ui.assets.access');
+  const checkConstraintsForTabAccess = (): boolean => {
+    const tabConstraintVal = assetsAccess?.getValueForConstraint('tabs');
+    if (!tabConstraintVal) return true;
+    return !!tabConstraintVal.find((item) => {
+      return item.id === 'controls';
+    });
+  };
+  const controlAccess = checkConstraintsForTabAccess();
+
   return (
     <>
       {assetType.controls_schema.map((c) => {
@@ -234,8 +242,8 @@ const AssetControls = ({
                     }, 2000);
                   }
                 }}
-                // Normally disabling is based off of whether user has access permissions from custom_settings, but that was more difficult to implement for microfrontends so we did it based on whether the user is a viewer
-                disabled={!status.messaging || userIsViewer}
+                // If users don't have access to controls, disable them
+                disabled={!status.messaging || !controlAccess}
                 isSubmitting={false}
               />
               {commandsSent[c.uuid] && (
