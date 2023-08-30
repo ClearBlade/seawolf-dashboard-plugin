@@ -2,6 +2,7 @@ import { Grid } from '@material-ui/core';
 import { useState } from 'react';
 import {
   DieselPumpTypeId,
+  ElectricPumpDFTypeId,
   ElectricPumpTypeId,
 } from '../../constants.ts/typeNames';
 import { EventBackendWithRuleLabel } from '../../types';
@@ -46,6 +47,9 @@ export default function Pump({
             <DieselPump assetType={assetType} asset={asset} />
           )}
           {assetType?.id === ElectricPumpTypeId && (
+            <ElectricPump assetType={assetType} asset={asset} />
+          )}
+          {assetType?.id === ElectricPumpDFTypeId && (
             <ElectricPump assetType={assetType} asset={asset} />
           )}
         </Grid>
