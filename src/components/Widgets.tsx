@@ -10,6 +10,7 @@ import { useFetchAssetsByIds } from '../api/useFetchAssetsByIds';
 import { useFetchAssetTree } from '../api/useFetchAssetTree';
 import {
   DieselPumpTypeId,
+  ElectricPumpDFTypeId,
   ElectricPumpTypeId,
   FlowMeterTypeId,
 } from '../constants.ts/typeNames';
@@ -107,7 +108,8 @@ export default function Widgets({ parent }: { parent?: Asset['frontend'] }) {
           const openEventsOnAsset = openEvents[childAsset.id];
           if (
             childAsset.type === DieselPumpTypeId ||
-            childAsset.type === ElectricPumpTypeId
+            childAsset.type === ElectricPumpTypeId ||
+            childAsset.type === ElectricPumpDFTypeId
           ) {
             return <Pump asset={childAsset} openEvents={openEventsOnAsset} />;
           } else if (childAsset.type === FlowMeterTypeId) {
