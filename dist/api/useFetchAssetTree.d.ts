@@ -26,18 +26,18 @@ export declare function useFetchAssetTree({ treeId }: {
             nodes: {
                 [x: string]: {
                     id: string;
-                    children: string[];
                     parentID: string;
+                    children: string[];
                 };
                 [x: number]: {
                     id: string;
-                    children: string[];
                     parentID: string;
+                    children: string[];
                 };
                 [x: symbol]: {
                     id: string;
-                    children: string[];
                     parentID: string;
+                    children: string[];
                 };
             };
         };
