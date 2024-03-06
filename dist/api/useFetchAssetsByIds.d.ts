@@ -1,7 +1,7 @@
-import { Asset } from '@clearblade/ia-mfe-core';
-import { QueryFunctionContext } from 'react-query';
+import { Asset } from "@clearblade/ia-mfe-core";
+import { QueryFunctionContext } from "react-query";
 export declare const assetByIdsFetcherFn: ({ queryKey: [{ params: { ids }, },], }: QueryFunctionContext<ReturnType<typeof assetByIdsQueryKeys.detail>>) => Promise<{
-    DATA: undefined | Asset['frontend'][];
+    DATA: undefined | Asset["frontend"][];
     COUNT: number;
 }>;
 export declare const assetByIdsQueryKeys: {
