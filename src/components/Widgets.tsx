@@ -1,24 +1,21 @@
-import { Asset, eventUpdater, tryParse } from '@clearblade/ia-mfe-core';
-import {
-  useDbAndLiveDataForEvents,
-  useOpenEventsForAssets,
-} from '@clearblade/ia-mfe-react';
-import { Grid, makeStyles } from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
-import React from 'react';
-import { useFetchAssetsByIds } from '../api/useFetchAssetsByIds';
-import { useFetchAssetTree } from '../api/useFetchAssetTree';
+import { Asset, tryParse } from "@clearblade/ia-mfe-core";
+import { Grid, makeStyles } from "@material-ui/core";
+import { Skeleton } from "@material-ui/lab";
+import React from "react";
+import { useFetchAssetsByIds } from "../api/useFetchAssetsByIds";
+import { useFetchAssetTree } from "../api/useFetchAssetTree";
 import {
   DieselPumpTypeId,
   ElectricPumpDFTypeId,
   ElectricPumpTypeId,
   FlowMeterTypeId,
-} from '../constants.ts/typeNames';
-import { EventBackendWithRuleLabel } from '../types';
-import FlowMeter from './FlowMeter';
-import PitLevel from './PitLevel';
-import Pump from './Pump';
-import RefreshRateSetting from './RefreshRateSetting';
+} from "../constants.ts/typeNames";
+import { EventBackendWithRuleLabel } from "../types";
+import FlowMeter from "./FlowMeter";
+import PitLevel from "./PitLevel";
+import Pump from "./Pump";
+import RefreshRateSetting from "./RefreshRateSetting";
+import { useOpenEventsForAssets } from "../api/useOpenEventsForAssets";
 
 const useWidgetsStyles = makeStyles((theme) => ({
   widgetContainer: {
@@ -26,7 +23,7 @@ const useWidgetsStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Widgets({ parent }: { parent?: Asset['frontend'] }) {
+export default function Widgets({ parent }: { parent?: Asset["frontend"] }) {
   const classes = useWidgetsStyles();
   const {
     data: selectedTree,
@@ -44,9 +41,6 @@ export default function Widgets({ parent }: { parent?: Asset['frontend'] }) {
     isLoading: loadingChildAssets,
     error: errorChildAssets,
   } = useFetchAssetsByIds(childrenIds);
-  const [openEvents, setOpenEvents] = React.useState<
-    Record<string, EventBackendWithRuleLabel[]>
-  >({});
 
   // See comment within useFetchAssetsByIds about why this sort occurs on the client side right now in order to maintain the same order for assets that would show in the asset tree on the asset details
   const sortedChildAssets = childAssets?.DATA?.sort(
@@ -55,37 +49,10 @@ export default function Widgets({ parent }: { parent?: Asset['frontend'] }) {
   );
 
   const {
-    data: events,
+    data: openEvents,
     error: eventsError,
-    loading: eventsLoading,
-  } = useDbAndLiveDataForEvents(
-    () => useOpenEventsForAssets(),
-    [
-      {
-        topics: [
-          '_dbupdate/_monitor/_events',
-          `_dbupdate/_monitor/_events/_platform`,
-        ],
-        updater: eventUpdater,
-      },
-    ]
-  );
-
-  React.useEffect(() => {
-    if (events) {
-      setOpenEvents(
-        events.DATA.reduce((acc, event) => {
-          const eventAssets = tryParse(event.assets, {});
-          Object.keys(eventAssets).forEach((assetId) => {
-            acc[assetId] !== undefined
-              ? acc[assetId].push(event)
-              : (acc[assetId] = [event]);
-          });
-          return acc;
-        }, {})
-      );
-    }
-  }, [events]);
+    isLoading: eventsLoading,
+  } = useOpenEventsForAssets();
 
   if (loadingSelectedTree || eventsLoading || loadingChildAssets)
     return <Skeleton />;
@@ -95,10 +62,10 @@ export default function Widgets({ parent }: { parent?: Asset['frontend'] }) {
     <Grid
       container
       spacing={2}
-      direction='column'
+      direction="column"
       className={classes.widgetContainer}
     >
-      <Grid item container justifyContent='flex-end' alignItems='center'>
+      <Grid item container justifyContent="flex-end" alignItems="center">
         <Grid item>
           <RefreshRateSetting assetIds={childrenIds} />
         </Grid>
